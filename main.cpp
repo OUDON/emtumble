@@ -242,10 +242,16 @@ std::vector<std::string> read_file(std::string file_name)
     return res;
 }
 
-int main()
-{
+int main(int argc, char *argv[])
+{    
+    if (argc != 2) {
+        std::cout << "Usage: emtumble filename" << std::endl;
+        return EXIT_FAILURE;
+    }
+
+    std::string filename = argv[1];
     Board board(10, 10);
-    board.set_items_from_strings(read_file("sample/sample1.txt"));
+    board.set_items_from_strings(read_file(filename));
     board.add_ball(2, -1, BLUE);
     board.print();
 
