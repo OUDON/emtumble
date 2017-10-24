@@ -98,6 +98,16 @@ class Board {
         flip_gears_dfs(x, y, visited);
     }
 
+    std::vector<std::string> remove_comments(std::vector<std::string> board_str)
+    {
+        std::vector<std::string> res;
+        for (auto row : board_str) {
+            if (row.size() == 0 || row[0] == '#') continue;
+            res.push_back(row);
+        }
+        return res;
+    }
+
 public:
     int width, height;
 
@@ -118,12 +128,16 @@ public:
 
     void set_items_from_strings(std::vector<std::string> board_str)
     {
+        board_str = remove_comments(board_str);
+
         int _height = board_str.size(), _width = board_str[0].size();
         cells.assign(_height, std::vector<Item>(_width));
-        for (int y=0; y<_height; y++) {
-            assert((int)board_str[y].size() == _width);
-            for (int x=0; x<_width; x++) {
-                set_item(x, y, symbol_to_item.at(board_str[y][x]));
+        if (_height && _width) {
+            for (int y=0; y<_height; y++) {
+                assert((int)board_str[y].size() == _width);
+                for (int x=0; x<_width; x++) {
+                    set_item(x, y, symbol_to_item.at(board_str[y][x]));
+                }
             }
         }
         height = _height;
