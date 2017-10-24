@@ -106,6 +106,11 @@ public:
         cells.assign(height, std::vector<Item>(width));
     }
 
+    Board(std::vector<std::string> board_str)
+    {
+        set_items_from_strings(board_str);
+    }
+
     void set_item(int x, int y, Item item)
     {
         cells[y][x] = item;
@@ -250,8 +255,7 @@ int main(int argc, char *argv[])
     }
 
     std::string filename = argv[1];
-    Board board(10, 10);
-    board.set_items_from_strings(read_file(filename));
+    Board board(read_file(filename));
     board.add_ball(2, -1, BLUE);
     board.print();
 
