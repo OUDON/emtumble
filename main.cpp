@@ -234,6 +234,31 @@ public:
     }
 };
 
+class Emulator {
+    Board board;
+
+public:
+    Emulator(Board _board) : board(_board) {}
+
+    void run(bool verbose)
+    {
+        board.add_ball(2, -1, BLUE);
+        if (verbose) board.print();
+        while (board.is_runnning()) {
+            board.step();
+            if (verbose) {
+                std::cout << "---------------" << std::endl;
+                board.print();
+            }
+        }
+    }
+
+    std::string get_results()
+    {
+        return board.get_results();
+    }
+};
+
 std::vector<std::string> read_file(std::string file_name)
 {
     std::ifstream ifs(file_name.c_str());
@@ -256,15 +281,10 @@ int main(int argc, char *argv[])
 
     std::string filename = argv[1];
     Board board(read_file(filename));
-    board.add_ball(2, -1, BLUE);
-    board.print();
+    Emulator emu(board);
 
-    while (board.is_runnning()) {
-        std::cout << "---------------" << std::endl;
-        board.step();
-        board.print();
-    }
+    emu.run(true);
 
     std::cout << "===============" << std::endl;
-    std::cout << board.get_results() << std::endl;
+    std::cout << emu.get_results() << std::endl;
 }
