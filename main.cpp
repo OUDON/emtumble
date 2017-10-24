@@ -59,6 +59,7 @@ class Board {
 
     const std::map<char, Item> symbol_to_item = {
         {' ', EMPTY},
+        {'.', EMPTY},
         {'<', RAMP_GOING_LEFT},
         {'>', RAMP_GOING_RIGHT},
         {'(', BIT_POINTING_LEFT},
