@@ -1,0 +1,15 @@
+# This example performes binary addition.
+# The left 3 bits and the right 4 bits mean a number.
+# ')': on, '(': off
+
+...)...)...
+..<.<.>.>..
+.>.)...(.<.
+..<.<.>.>..
+.>.(...(.<.
+..<.<.>.>..
+.>.>...(.<.
+..>.>.<.<..
+...>._.<...
+....>.<....
+.....x.....
