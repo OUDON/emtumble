@@ -40,11 +40,13 @@ std::vector<std::string> Board::remove_comments(std::vector<std::string> board_s
 
 Board::Board(int _width, int _height) : width(_width), height(_height)
 {
+    ball = nullptr;
     cells.assign(height, std::vector<Item>(width));
 }
 
 Board::Board(std::vector<std::string> board_str)
 {
+    ball = nullptr;
     set_items_from_strings(board_str);
 }
 
@@ -155,7 +157,7 @@ void Board::print() const
 {
     for (int y=0; y<height; y++) {
         for (int x=0; x<width; x++) {
-            if (ball != nullptr && ball->x == x && ball->y == y) {
+             if (ball != nullptr && ball->x == x && ball->y == y) {
                 std::cout << "o";
             } else {
                 std::cout << item_to_symbol.at(cells[y][x]);

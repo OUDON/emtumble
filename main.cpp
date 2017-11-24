@@ -6,33 +6,26 @@
 
 #include "Board.hpp"
 #include "Emulator.hpp"
+#include "common.hpp"
 
-std::vector<std::string> read_file(std::string file_name)
-{
-    std::ifstream ifs(file_name.c_str());
-    if (ifs.fail()) return std::vector<std::string>();
-    std::string str;
-    std::vector<std::string> res;
-    while (getline(ifs, str)) {
-        res.push_back(str);
-        std::cerr << str << std::endl;
-    }
-    return res;
-}
+#include "GUI.hpp"
 
 int main(int argc, char *argv[])
 {    
-    if (argc != 2) {
-        std::cout << "Usage: emtumble filename" << std::endl;
+    if (argc != 2 && argc != 3) {
+        std::cout << "Usage: emtumble filename [--gui | --cli]" << std::endl;
         return EXIT_FAILURE;
     }
 
     std::string filename = argv[1];
-    Board board(read_file(filename));
+    Board board(common::read_file(filename));
     Emulator emu(board);
 
-    emu.run(true);
-
-    std::cout << "===============" << std::endl;
-    std::cout << emu.get_results() << std::endl;
+    if (argc == 2 || std::string(argv[2]) == "--gui") {
+        GUI::get_instance().start(&argc, argv);
+    } else {
+        emu.run(true);
+        std::cout << "===============" << std::endl;
+        std::cout << emu.get_results() << std::endl;
+    }
 }
