@@ -18,10 +18,13 @@ public:
 
 private slots:
     void on_button_step_clicked();
+    void on_action_open_triggered();
 
 private:
     Ui::MainWindow *ui;
     QGraphicsScene *scene;
+
+    void update_graphics();
 };
 
 #endif // MAINWINDOW_H

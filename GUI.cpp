@@ -15,16 +15,9 @@ int GUI::start(int *argcp, char *argv[])
     }
 
     load_board("sample/sample1.txt");
-    board->add_ball(2, -1, BLUE);
 
     app = new QApplication(*argcp, argv);
     main_window = new MainWindow;
-
-    // QPushButton *button_step = ui.button_step;
-    // QObject::connect(button_step, SIGNAL(clicked()), &app, SLOT(Ui::MainWindow::step()));
-
-    // ui.graphics_view->setScene(scene);
-
     main_window->show();
     return app->exec();
 }
@@ -42,7 +35,7 @@ void GUI::draw(QGraphicsScene *scene)
 void GUI::load_board(std::string fname)
 {
     board = new BoardGUI(common::read_file(fname));
-    board->print();
+    board->add_ball(2, -1, BLUE);
 }
 
 GUI& GUI::get_instance()
