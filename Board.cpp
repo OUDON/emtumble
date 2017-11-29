@@ -1,6 +1,5 @@
 #include "Board.hpp"
 
-
 void Board::flip_gears_dfs(int x, int y, std::set<std::pair<int, int>> visited)
 {
     visited.insert(std::make_pair(x, y));
@@ -174,4 +173,28 @@ std::string Board::get_results() const
         res += (b.color == BLUE ? 'b' : 'r');
     }
     return res;
+}
+
+BoardGUI::BoardGUI(std::vector<std::string> board_str) : Board(board_str) {}
+
+void BoardGUI::draw(QGraphicsScene *scene) const
+{
+    QBrush green_brush(Qt::green);
+    QBrush blue_brush(Qt::blue);
+    QPen pen(Qt::black);
+    pen.setWidth(1);
+
+    const int CELL_WIDTH = 50, CELL_HEIGHT = 50;
+    const int BALL_SIZE = 25;
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            scene->addRect(x*CELL_WIDTH, y*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, pen, QBrush(item_to_color.at(cells[y][x])));
+             if (ball != nullptr && ball->x == x && ball->y == y) {
+                 double cx = x * CELL_WIDTH + CELL_WIDTH/2 - BALL_SIZE/2;
+                 double cy = y * CELL_HEIGHT + CELL_HEIGHT/2 - BALL_SIZE/2;
+                 QColor color = (ball->color == BLUE ? Qt::blue : Qt::red);
+                 scene->addEllipse(cx, cy, BALL_SIZE, BALL_SIZE, pen, color);
+             }
+        }
+    }
 }

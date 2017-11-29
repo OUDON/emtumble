@@ -2,16 +2,21 @@
 #include "Emulator.hpp"
 #include "Board.hpp"
 
+#include "ui/mainwindow.h"
 #include <QApplication>
 #include <QTextEdit>
 #include <QtGui>
 #include <QWidget>
+#include <QGraphicsScene>
 
 class GUI {
     void display();
     GUI();
     ~GUI() = default;
-    Board *board;
+
+    QApplication *app;
+    MainWindow *main_window;
+    BoardGUI *board;
 
 public:
     GUI(const GUI&) = delete;
@@ -20,16 +25,9 @@ public:
     GUI& operator=(GUI&&) = delete;
 
     int start(int *argcp, char *argv[]);
+    void step();
+    void draw(QGraphicsScene *scene);
 
     static GUI& get_instance();
     void load_board(std::string fname);
-};
-
-class Paint : public QWidget {
-    // Q_OBJECT
-public:
-protected:
-        void paintEvent(QPaintEvent *event);
-signals:
-public slots:
 };

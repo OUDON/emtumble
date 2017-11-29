@@ -16,6 +16,7 @@ SOURCE_DIR  = .
 
 INCLUDEPATH    += $SOURCE_DIR
 SOURCES        += $$files(*.cpp, true)
+HEADERS        += ui/mainwindow.h
 
 mac {
   CONFIG -= app_bundle

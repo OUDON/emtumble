@@ -8,6 +8,8 @@
 #include <set>
 #include "Ball.hpp"
 
+#include <QGraphicsScene>
+
 enum Color {
     BLUE,
     RED,
@@ -27,10 +29,12 @@ enum Item {
 };
 
 class Board {
+protected:
     Ball *ball;
     std::vector<Ball> results;
     std::vector<std::vector<Item>> cells;
 
+private:
     const std::map<Item, char> item_to_symbol = {
         {EMPTY, ' '},
         {RAMP_GOING_LEFT, '<'},
@@ -75,4 +79,23 @@ public:
     void step();
     void print() const;
     std::string get_results() const;
+};
+
+class BoardGUI : public Board {
+    const std::map<Item, QColor> item_to_color = {
+        {EMPTY, Qt::white},
+        {RAMP_GOING_LEFT, Qt::green},
+        {RAMP_GOING_RIGHT, Qt::darkGreen},
+        {BIT_POINTING_LEFT, Qt::blue},
+        {BIT_POINTING_RIGHT, Qt::darkBlue},
+        {GEAR_BIT_POINTING_LEFT, Qt::red},
+        {GEAR_BIT_POINTING_RIGHT, Qt::darkRed},
+        {GEAR, Qt::magenta},
+        {CROSS_OVER, Qt::yellow},
+        {INTER_CEPTER, Qt::gray}
+    };
+
+public:
+  BoardGUI(std::vector<std::string> board_str);
+  void draw(QGraphicsScene *scene) const;
 };
