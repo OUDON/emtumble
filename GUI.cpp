@@ -29,6 +29,7 @@ void GUI::step()
 
 void GUI::draw(QGraphicsScene *scene)
 {
+    scene->clear();
     board->draw(scene);
 }
 
