@@ -1,8 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "Board.hpp"
+
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QTimer>
 
 namespace Ui {
 class MainWindow;
@@ -28,7 +31,10 @@ private:
     QGraphicsScene *scene;
     QTimer *timer_simulation_delay;
 
+    BoardGUI *board;
+
     void update_graphics();
+    void load_board(std::string fname);
 };
 
 #endif // MAINWINDOW_H

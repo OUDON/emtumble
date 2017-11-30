@@ -2,11 +2,13 @@
 #include "ui_mainwindow.h"
 
 #include "GUI.hpp"
+#include "common.hpp"
 #include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    board(nullptr)
 {
     ui->setupUi(this);
 
@@ -15,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     scene = new QGraphicsScene(this);
     ui->graphics_view->setScene(scene);
-    GUI::get_instance().draw(scene);
+    update_graphics();
 }
 
 MainWindow::~MainWindow()
@@ -25,13 +27,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::step_board()
 {
-    GUI::get_instance().step();
+    if (board == nullptr) return;
+    board->step();
     update_graphics();
+}
+
+void MainWindow::load_board(std::string fname)
+{
+    if (board != nullptr) delete board;
+    board = new BoardGUI(common::read_file(fname));
+    board->add_ball(2, -1, BLUE);
 }
 
 void MainWindow::update_graphics()
 {
-    GUI::get_instance().draw(scene);
+    if (board == nullptr) return;
+    scene->clear();
+    board->draw(scene);
 }
 
 void MainWindow::on_button_step_clicked()
@@ -42,7 +54,7 @@ void MainWindow::on_button_step_clicked()
 void MainWindow::on_action_open_triggered()
 {
     QString file_name = QFileDialog::getOpenFileName(this,"select file");
-    GUI::get_instance().load_board(file_name.toStdString());
+    load_board(file_name.toStdString());
     update_graphics();
 }
 
