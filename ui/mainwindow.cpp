@@ -53,7 +53,7 @@ void MainWindow::on_button_step_clicked()
 
 void MainWindow::on_action_open_triggered()
 {
-    QString file_name = QFileDialog::getOpenFileName(this,"select file");
+    QString file_name = QFileDialog::getOpenFileName(this, "select file");
     load_board(file_name.toStdString());
     update_graphics();
 }

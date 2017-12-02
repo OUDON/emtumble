@@ -57,8 +57,10 @@ void Board::set_item(int x, int y, Item item)
 void Board::set_items_from_strings(std::vector<std::string> board_str)
 {
     board_str = remove_comments(board_str);
+    int _height = board_str.size();
+    if (_height == 0) return;
 
-    int _height = board_str.size(), _width = board_str[0].size();
+    int _width = board_str[0].size();
     cells.assign(_height, std::vector<Item>(_width));
     if (_height && _width) {
         for (int y=0; y<_height; y++) {
