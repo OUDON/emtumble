@@ -120,10 +120,6 @@ void Board::step()
 
     Item &cell = cells[ball->y][ball->x];
     switch (cell) {
-    case EMPTY:
-        // do nothing
-        break;
-
     case RAMP_GOING_LEFT:
         ball->direction = -1;
         break;
@@ -175,7 +171,7 @@ void Board::step()
         break;
 
     default:
-        std::cerr << "WARNING: The ball is reached at (" << ball->x << ", " << ball->y << "), but this cell is given no action." << std::endl;
+        std::cerr << "WARNING: The ball is arrived at (" << ball->x << ", " << ball->y << "), but this cell is given no action." << std::endl;
     }
 }
 
