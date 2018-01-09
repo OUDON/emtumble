@@ -4,7 +4,7 @@ Emulator::Emulator(Board _board) : board(_board) {}
 
 void Emulator::run(bool verbose)
 {
-    board.add_ball(2, -1, BLUE);
+    board.lever_pulled(BLUE);
     if (verbose) board.print();
     while (board.is_runnning()) {
         board.step();

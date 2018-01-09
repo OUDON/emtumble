@@ -10,6 +10,12 @@
 
 #include <QGraphicsScene>
 
+struct Position {
+  int x, y;
+  Position(int _x, int _y) : x(_x), y(_y) {}
+  Position() {}
+};
+
 enum Color {
     BLUE,
     RED,
@@ -26,6 +32,10 @@ enum Item {
     GEAR,
     CROSS_OVER,
     INTER_CEPTER,
+    SPAWN_BALL_BLUE,
+    SPAWN_BALL_RED,
+    LEVER_BLUE,
+    LEVER_RED,
 };
 
 class Board {
@@ -33,6 +43,7 @@ protected:
     Ball *ball;
     std::vector<Ball> results;
     std::vector<std::vector<Item>> cells;
+    std::map<Color, Position> spawn_pos;
 
 private:
     const std::map<Item, char> item_to_symbol = {
@@ -45,7 +56,11 @@ private:
         {GEAR_BIT_POINTING_RIGHT, '}'},
         {GEAR, '*'},
         {CROSS_OVER, 'x'},
-        {INTER_CEPTER, '_'}
+        {INTER_CEPTER, '_'},
+        {SPAWN_BALL_BLUE, 'B'},
+        {SPAWN_BALL_RED, 'R'},
+        {LEVER_BLUE, 'b'},
+        {LEVER_RED, 'r'},
     };
 
     const std::map<char, Item> symbol_to_item = {
@@ -59,7 +74,11 @@ private:
         {'}', GEAR_BIT_POINTING_RIGHT},
         {'*', GEAR},
         {'x', CROSS_OVER},
-        {'_', INTER_CEPTER}
+        {'_', INTER_CEPTER},
+        {'B', SPAWN_BALL_BLUE},
+        {'R', SPAWN_BALL_RED},
+        {'b', LEVER_BLUE},
+        {'r', LEVER_RED},
     };
 
     void flip_gears_dfs(int x, int y, std::set<std::pair<int, int>> visited);
@@ -74,7 +93,8 @@ public:
     void set_item(int x, int y, Item item);
     void set_items_from_strings(std::vector<std::string> board_str);
     
-    bool add_ball(int x, int y, Color color);
+    void lever_pulled(Color color);
+    bool add_ball(Color color);
     bool is_runnning();
     void step();
     void print() const;
@@ -92,7 +112,11 @@ class BoardGUI : public Board {
         {GEAR_BIT_POINTING_RIGHT, Qt::darkRed},
         {GEAR, Qt::magenta},
         {CROSS_OVER, Qt::yellow},
-        {INTER_CEPTER, Qt::gray}
+        {INTER_CEPTER, Qt::gray},
+        {SPAWN_BALL_BLUE, QColor("cornflowerblue")},
+        {SPAWN_BALL_RED, QColor("coral")},
+        {LEVER_BLUE, QColor("lightskyblue")},
+        {LEVER_RED, QColor("lightpink")},
     };
 
 public:

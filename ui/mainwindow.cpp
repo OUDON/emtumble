@@ -36,7 +36,7 @@ void MainWindow::load_board(std::string fname)
 {
     if (board != nullptr) delete board;
     board = new BoardGUI(common::read_file(fname));
-    board->add_ball(2, -1, BLUE);
+    board->lever_pulled(BLUE);
 }
 
 void MainWindow::update_graphics()

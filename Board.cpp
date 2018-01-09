@@ -51,11 +51,19 @@ Board::Board(std::vector<std::string> board_str)
 
 void Board::set_item(int x, int y, Item item)
 {
+    if (item == SPAWN_BALL_BLUE || item == SPAWN_BALL_RED) {
+        Color color = (item == SPAWN_BALL_BLUE ? BLUE : RED);
+        if (spawn_pos.count(color)) {
+            std::cerr << "WARNING: The spawn point must appear exactly once in the board for each color." << std::endl;
+        }
+        spawn_pos[color] = Position(x, y);
+    }
     cells[y][x] = item;
 }
 
 void Board::set_items_from_strings(std::vector<std::string> board_str)
 {
+    spawn_pos.clear();
     board_str = remove_comments(board_str);
     int _height = board_str.size();
     if (_height == 0) return;
@@ -74,11 +82,28 @@ void Board::set_items_from_strings(std::vector<std::string> board_str)
     width  = _width;
 }
 
-bool Board::add_ball(int x, int y, Color color)
+void Board::lever_pulled(Color color)
+{
+    if (ball != nullptr) {
+        results.push_back(*ball);
+        delete ball;
+        ball = nullptr;
+    }
+
+    add_ball(color);
+}
+
+bool Board::add_ball(Color color)
 {
     if (ball != nullptr) return false;
     int d = (color == BLUE ? 1 : -1);
-    ball = new Ball(x, y, d, color);
+
+    if (!spawn_pos.count(color)) {
+        std::cerr << "WARNING: The symbol '" << "br"[color] << "' does not be appeard in the board" << std::endl;
+    }
+
+    Position pos = spawn_pos[color];
+    ball = new Ball(pos.x, pos.y, d, color);
     return true;
 }
 
@@ -92,19 +117,6 @@ void Board::step()
 {
     if (ball == nullptr) return;
     ball->step();
-
-    if (ball->y == height) {
-        results.push_back(*ball);
-        int x = ball->x;
-        delete ball;
-        ball = nullptr;
-        if (x <= width/2) {
-            add_ball(2, -1, BLUE);
-        } else {
-            add_ball(8, -1, RED);
-        }
-        return;
-    }
 
     Item &cell = cells[ball->y][ball->x];
     switch (cell) {
@@ -144,13 +156,26 @@ void Board::step()
         flip_gears(ball->x, ball->y);
         break;
 
-    case CROSS_OVER:
-        // do nothing
-        break;
-
     case INTER_CEPTER:
         ball->direction = 0;
         break;
+
+    case LEVER_BLUE:
+        lever_pulled(BLUE);
+        break;
+
+    case LEVER_RED:
+        lever_pulled(RED);
+        break;
+
+    case CROSS_OVER:
+    case SPAWN_BALL_BLUE:
+    case SPAWN_BALL_RED:
+        // do nothing
+        break;
+
+    default:
+        std::cerr << "WARNING: The ball is reached at (" << ball->x << ", " << ball->y << "), but this cell is given no action." << std::endl;
     }
 }
 
