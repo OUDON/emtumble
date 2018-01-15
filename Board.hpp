@@ -119,6 +119,8 @@ class BoardGUI : public Board {
         {LEVER_RED, QColor("lightpink")},
     };
 
+    int zoom_rate; // %
+
 public:
   BoardGUI(std::vector<std::string> board_str);
   void draw(QGraphicsScene *scene) const;

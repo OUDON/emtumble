@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     scene = new QGraphicsScene(this);
     ui->graphics_view->setScene(scene);
+
     update_graphics();
 }
 

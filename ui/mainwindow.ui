@@ -47,7 +47,14 @@
      </layout>
     </item>
     <item>
-     <widget class="QGraphicsView" name="graphics_view"/>
+     <widget class="ScalableGraphicsView" name="graphics_view">
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -78,6 +85,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ScalableGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>ScalableGraphicsView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <slots>

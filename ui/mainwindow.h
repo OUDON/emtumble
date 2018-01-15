@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <QTimer>
+#include <QWheelEvent>
 
 namespace Ui {
 class MainWindow;
