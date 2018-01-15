@@ -20,5 +20,4 @@ void ScalableGraphicsView::wheelEvent(QWheelEvent *event)
     qreal factor = 1.0 * qreal(scale_factor_int) / 100.0;
     resetMatrix();
     scale(factor, factor);
-    std::cerr << "scale_factor: " << factor << std::endl;
 }
