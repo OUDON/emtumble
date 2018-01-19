@@ -44,7 +44,7 @@ void MainWindow::update_graphics()
 {
     if (board == nullptr) return;
     scene->clear();
-    board->draw(scene);
+    board->draw(scene, true);
 }
 
 void MainWindow::on_button_step_clicked()

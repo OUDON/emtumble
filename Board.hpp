@@ -9,6 +9,8 @@
 #include "Ball.hpp"
 
 #include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QPixmap>
 
 struct Position {
   int x, y;
@@ -119,9 +121,30 @@ class BoardGUI : public Board {
         {LEVER_RED, QColor("lightpink")},
     };
 
+    const std::map<Item, QPixmap> item_to_pixmap = {
+        {EMPTY,                   QPixmap("./img/elements/empty.png")},
+        {RAMP_GOING_LEFT,         QPixmap("./img/elements/ramp_going_left.png")},
+        {RAMP_GOING_RIGHT,        QPixmap("./img/elements/ramp_going_right.png")},
+        {BIT_POINTING_LEFT,       QPixmap("./img/elements/bit_pointing_left.png")},
+        {BIT_POINTING_RIGHT,      QPixmap("./img/elements/bit_pointing_right.png")},
+        {GEAR_BIT_POINTING_LEFT,  QPixmap("./img/elements/gear_bit_pointing_right.png")},
+        {GEAR_BIT_POINTING_RIGHT, QPixmap("./img/elements/gear_bit_pointing_right.png")},
+        {GEAR,                    QPixmap("./img/elements/gear.png")},
+        {CROSS_OVER,              QPixmap("./img/elements/crossover.png")},
+        {INTER_CEPTER,            QPixmap("./img/elements/interceptor.png")},
+        {SPAWN_BALL_BLUE,         QPixmap("./img/elements/empty.png")},
+        {SPAWN_BALL_RED,          QPixmap("./img/elements/empty.png")},
+        {LEVER_BLUE,              QPixmap("./img/elements/empty.png")},
+        {LEVER_RED,               QPixmap("./img/elements/empty.png")},
+    };
+
     int zoom_rate; // %
 
 public:
   BoardGUI(std::vector<std::string> board_str);
-  void draw(QGraphicsScene *scene) const;
+  void draw(QGraphicsScene *scene, bool as_image) const;
+
+private:
+  void draw_rect(QRect rect, Item item, QGraphicsScene *scene, bool as_image) const;
+  QRect create_rect(int x, int y, int w, int h) const;
 };

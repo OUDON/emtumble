@@ -200,7 +200,7 @@ std::string Board::get_results() const
 
 BoardGUI::BoardGUI(std::vector<std::string> board_str) : Board(board_str) {}
 
-void BoardGUI::draw(QGraphicsScene *scene) const
+void BoardGUI::draw(QGraphicsScene *scene, bool as_image) const
 {
     QBrush green_brush(Qt::green);
     QBrush blue_brush(Qt::blue);
@@ -211,13 +211,35 @@ void BoardGUI::draw(QGraphicsScene *scene) const
     const int BALL_SIZE = 25;
     for (int y=0; y<height; y++) {
         for (int x=0; x<width; x++) {
-            scene->addRect(x*CELL_WIDTH, y*CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT, pen, QBrush(item_to_color.at(cells[y][x])));
-             if (ball != nullptr && ball->x == x && ball->y == y) {
-                 double cx = x * CELL_WIDTH + CELL_WIDTH/2 - BALL_SIZE/2;
-                 double cy = y * CELL_HEIGHT + CELL_HEIGHT/2 - BALL_SIZE/2;
-                 QColor color = (ball->color == BLUE ? Qt::blue : Qt::red);
-                 scene->addEllipse(cx, cy, BALL_SIZE, BALL_SIZE, pen, color);
-             }
+            QRect rect = create_rect(x*CELL_WIDTH, y*CELL_WIDTH, CELL_WIDTH, CELL_HEIGHT);
+            draw_rect(rect, cells[y][x], scene, as_image);
+
+            if (ball != nullptr && ball->x == x && ball->y == y) {
+                double cx = x * CELL_WIDTH + CELL_WIDTH/2 - BALL_SIZE/2;
+                double cy = y * CELL_HEIGHT + CELL_HEIGHT/2 - BALL_SIZE/2;
+                QColor color = (ball->color == BLUE ? Qt::blue : Qt::red);
+                scene->addEllipse(cx, cy, BALL_SIZE, BALL_SIZE, pen, color);
+            }
         }
     }
+}
+
+void BoardGUI::draw_rect(QRect rect, Item item, QGraphicsScene *scene, bool as_image) const
+{
+    if (as_image) {
+        QPixmap pixmap = item_to_pixmap.at(item);
+        pixmap = pixmap.scaled(rect.size(), Qt::KeepAspectRatioByExpanding);
+        QGraphicsPixmapItem *pixmap_item = scene->addPixmap(pixmap);
+        pixmap_item->setPos(rect.topLeft());
+    } else {
+        QPen pen(Qt::black);
+        pen.setWidth(1);
+        scene->addRect(rect, pen, QBrush(item_to_color.at(item)));
+    }
+}
+
+QRect BoardGUI::create_rect(int x, int y, int w, int h) const
+{
+    QRect rect = QRect(x, y, w, h);
+    return rect;
 }
