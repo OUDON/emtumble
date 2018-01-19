@@ -25,7 +25,7 @@ private slots:
     void on_action_open_triggered();
     void on_button_play_clicked();
     void on_radio_button_draw_icon_toggled(bool checked);
-    void on_slider_speed_value_changed(int value);
+    void on_slider_speed_valueChanged(int value);
 
     void step_board();
 

@@ -19,8 +19,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphics_view->setScene(scene);
 
     update_graphics();
-
-    connect(ui->slider_speed, SIGNAL(valueChanged(int)), this, SLOT(on_slider_speed_value_changed(int)));
 }
 
 MainWindow::~MainWindow()
@@ -82,7 +80,7 @@ void MainWindow::on_radio_button_draw_icon_toggled(bool checked)
     update_graphics();
 }
 
-void MainWindow::on_slider_speed_value_changed(int value)
+void MainWindow::on_slider_speed_valueChanged(int value)
 {
     if (timer_simulation_delay->isActive()) {
         timer_simulation_delay->setInterval(get_timer_delay());
