@@ -24,6 +24,7 @@ private slots:
     void on_button_step_clicked();
     void on_action_open_triggered();
     void on_button_play_clicked();
+    void on_radio_button_draw_icon_toggled(bool checked);
 
     void step_board();
 

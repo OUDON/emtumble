@@ -44,7 +44,7 @@ void MainWindow::update_graphics()
 {
     if (board == nullptr) return;
     scene->clear();
-    board->draw(scene, true);
+    board->draw(scene, ui->radio_button_draw_icon->isChecked());
 }
 
 void MainWindow::on_button_step_clicked()
@@ -68,4 +68,9 @@ void MainWindow::on_button_play_clicked()
         timer_simulation_delay->start(500);
         ui->button_play->setText("Stop");
     }
+}
+
+void MainWindow::on_radio_button_draw_icon_toggled(bool checked)
+{
+    update_graphics();
 }
