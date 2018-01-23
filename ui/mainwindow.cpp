@@ -7,18 +7,16 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    board(nullptr)
+    ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     timer_simulation_delay = new QTimer(this);
     connect(timer_simulation_delay, SIGNAL(timeout()), this, SLOT(step_board()));
 
-    scene = new QGraphicsScene(this);
+    scene = new BoardGraphicsScene(this);
+    scene->set_as_image(ui->radio_button_draw_icon->isChecked());
     ui->graphics_view->setScene(scene);
-
-    update_graphics();
 }
 
 MainWindow::~MainWindow()
@@ -28,23 +26,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::step_board()
 {
-    if (board == nullptr) return;
-    board->step();
-    update_graphics();
+    scene->step();
 }
 
 void MainWindow::load_board(std::string fname)
 {
-    if (board != nullptr) delete board;
-    board = new BoardGUI(common::read_file(fname));
-    board->lever_pulled(BLUE);
-}
-
-void MainWindow::update_graphics()
-{
-    if (board == nullptr) return;
-    scene->clear();
-    board->draw(scene, ui->radio_button_draw_icon->isChecked());
+    scene->load_board(fname);
 }
 
 int MainWindow::get_timer_delay() const
@@ -61,7 +48,6 @@ void MainWindow::on_action_open_triggered()
 {
     QString file_name = QFileDialog::getOpenFileName(this, "select file");
     load_board(file_name.toStdString());
-    update_graphics();
 }
 
 void MainWindow::on_button_play_clicked()
@@ -77,7 +63,7 @@ void MainWindow::on_button_play_clicked()
 
 void MainWindow::on_radio_button_draw_icon_toggled(bool checked)
 {
-    update_graphics();
+    scene->set_as_image(ui->radio_button_draw_icon->isChecked());
 }
 
 void MainWindow::on_slider_speed_valueChanged(int value)

@@ -43,7 +43,7 @@ Board::Board(int _width, int _height) : width(_width), height(_height)
     cells.assign(height, std::vector<Item>(width));
 }
 
-Board::Board(std::vector<std::string> board_str)
+Board::Board(std::vector<std::string> &board_str)
 {
     ball = nullptr;
     set_items_from_strings(board_str);
@@ -198,9 +198,9 @@ std::string Board::get_results() const
     return res;
 }
 
-BoardGUI::BoardGUI(std::vector<std::string> board_str) : Board(board_str) {}
+BoardGUI::BoardGUI(std::vector<std::string> &board_str) : Board(board_str) {}
 
-void BoardGUI::draw(QGraphicsScene *scene, bool as_image) const
+void BoardGUI::draw(QGraphicsScene *scene, bool as_image)
 {
     QBrush green_brush(Qt::green);
     QBrush blue_brush(Qt::blue);
@@ -209,10 +209,12 @@ void BoardGUI::draw(QGraphicsScene *scene, bool as_image) const
 
     const int CELL_WIDTH = 50, CELL_HEIGHT = 50;
     const int BALL_SIZE = 25;
+    graphics_items.clear();
     for (int y=0; y<height; y++) {
         for (int x=0; x<width; x++) {
             QRect rect = create_rect(x*CELL_WIDTH, y*CELL_WIDTH, CELL_WIDTH, CELL_HEIGHT);
-            draw_rect(rect, cells[y][x], scene, as_image);
+            QGraphicsItem *gitem = add_rect(rect, cells[y][x], scene, as_image);
+            graphics_items[gitem] = std::make_pair(x, y);
 
             if (ball != nullptr && ball->x == x && ball->y == y) {
                 double cx = x * CELL_WIDTH + CELL_WIDTH/2 - BALL_SIZE/2;
@@ -224,22 +226,30 @@ void BoardGUI::draw(QGraphicsScene *scene, bool as_image) const
     }
 }
 
-void BoardGUI::draw_rect(QRect rect, Item item, QGraphicsScene *scene, bool as_image) const
+QGraphicsItem* BoardGUI::add_rect(QRect rect, Item item, QGraphicsScene *scene, bool as_image) const
 {
+    QGraphicsItem *res;
     if (as_image) {
         QPixmap pixmap = item_to_pixmap.at(item);
         pixmap = pixmap.scaled(rect.size(), Qt::KeepAspectRatioByExpanding);
         QGraphicsPixmapItem *pixmap_item = scene->addPixmap(pixmap);
         pixmap_item->setPos(rect.topLeft());
+        res = pixmap_item;
     } else {
         QPen pen(Qt::black);
         pen.setWidth(1);
-        scene->addRect(rect, pen, QBrush(item_to_color.at(item)));
+        res =  scene->addRect(rect, pen, QBrush(item_to_color.at(item)));
     }
+    return res;
 }
 
 QRect BoardGUI::create_rect(int x, int y, int w, int h) const
 {
     QRect rect = QRect(x, y, w, h);
     return rect;
+}
+
+void BoardGUI::item_clicked(QGraphicsItem *gitem)
+{
+    std::cerr << "Clicked: (" << graphics_items.at(gitem).first << ", " << graphics_items.at(gitem).second << ")" << std::endl;
 }

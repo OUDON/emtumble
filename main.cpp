@@ -18,7 +18,8 @@ int main(int argc, char *argv[])
     }
 
     std::string filename = argv[1];
-    Board board(common::read_file(filename));
+    std::vector<std::string> board_str = common::read_file(filename);
+    Board board(board_str);
     Emulator emu(board);
 
     if (argc == 2 || std::string(argv[2]) == "--gui") {

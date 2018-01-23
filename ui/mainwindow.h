@@ -4,9 +4,9 @@
 #include "Board.hpp"
 
 #include <QMainWindow>
-#include <QGraphicsScene>
 #include <QTimer>
 #include <QWheelEvent>
+#include "./BoardGraphicsScene.h"
 
 namespace Ui {
 class MainWindow;
@@ -31,12 +31,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QGraphicsScene *scene;
+    BoardGraphicsScene *scene;
     QTimer *timer_simulation_delay;
 
-    BoardGUI *board;
-
-    void update_graphics();
     void load_board(std::string fname);
     int get_timer_delay() const;
 };

@@ -91,7 +91,7 @@ public:
     int width, height;
 
     Board(int _width, int _height);
-    Board(std::vector<std::string> board_str);
+    Board(std::vector<std::string> &board_str);
     void set_item(int x, int y, Item item);
     void set_items_from_strings(std::vector<std::string> board_str);
     
@@ -141,10 +141,13 @@ class BoardGUI : public Board {
     int zoom_rate; // %
 
 public:
-  BoardGUI(std::vector<std::string> board_str);
-  void draw(QGraphicsScene *scene, bool as_image) const;
+  BoardGUI(std::vector<std::string> &board_str);
+  void draw(QGraphicsScene *scene, bool as_image);
+  void item_clicked(QGraphicsItem *gitem);
 
 private:
-  void draw_rect(QRect rect, Item item, QGraphicsScene *scene, bool as_image) const;
+  QGraphicsItem* add_rect(QRect rect, Item item, QGraphicsScene *scene, bool as_image) const;
   QRect create_rect(int x, int y, int w, int h) const;
+
+  std::map<QGraphicsItem*, std::pair<int, int>> graphics_items;
 };
