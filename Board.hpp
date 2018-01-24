@@ -86,6 +86,9 @@ private:
     void flip_gears_dfs(int x, int y, std::set<std::pair<int, int>> visited);
     void flip_gears(int x, int y);
     std::vector<std::string> remove_comments(std::vector<std::string> board_str);
+
+protected:
+    void flip_item(int x, int y);
     
 public:
     int width, height;

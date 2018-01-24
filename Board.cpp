@@ -27,6 +27,20 @@ void Board::flip_gears(int x, int y)
     flip_gears_dfs(x, y, visited);
 }
 
+void Board::flip_item(int x, int y)
+{
+    Item &cell = cells[y][x];
+    if (cell == BIT_POINTING_LEFT) {
+        cell = BIT_POINTING_RIGHT;
+    } else if (cell == BIT_POINTING_RIGHT) {
+        cell = BIT_POINTING_LEFT;
+    } else if (cell == GEAR_BIT_POINTING_LEFT ||
+               cell == GEAR_BIT_POINTING_RIGHT ||
+               cell == GEAR) {
+        flip_gears(x, y);
+    }
+}
+
 std::vector<std::string> Board::remove_comments(std::vector<std::string> board_str)
 {
     std::vector<std::string> res;
@@ -251,5 +265,9 @@ QRect BoardGUI::create_rect(int x, int y, int w, int h) const
 
 void BoardGUI::item_clicked(QGraphicsItem *gitem)
 {
-    std::cerr << "Clicked: (" << graphics_items.at(gitem).first << ", " << graphics_items.at(gitem).second << ")" << std::endl;
+    int x = graphics_items.at(gitem).first;
+    int y = graphics_items.at(gitem).second;
+    std::cerr << "Clicked: (" << x << ", " << y << ")" << std::endl;
+
+    flip_item(x, y);
 }

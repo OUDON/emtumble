@@ -31,3 +31,15 @@ void BoardGraphicsScene::set_as_image(bool _as_image)
     as_image = _as_image;
     update_graphics();
 }
+
+void BoardGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QPointF scene_pos = event->scenePos();
+    QGraphicsItem *item = itemAt(scene_pos, QTransform());
+    std::cerr << "Mouse Clicked: " << scene_pos.rx() << ", " << scene_pos.ry() << std::endl;
+
+    if (item != nullptr) {
+        board->item_clicked(item);
+        update_graphics();
+    }
+}

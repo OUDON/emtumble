@@ -3,6 +3,7 @@
 
 #include "../Board.hpp"
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 #include <QObject>
 
 class BoardGraphicsScene : public QGraphicsScene
@@ -16,6 +17,7 @@ public:
     void step();
 
 protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     void update_graphics();
