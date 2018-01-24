@@ -1,7 +1,10 @@
 #include "BoardGraphicsScene.h"
 #include "../common.hpp"
 
-BoardGraphicsScene::BoardGraphicsScene(QObject *parent) : QGraphicsScene(parent), board(nullptr) {}
+BoardGraphicsScene::BoardGraphicsScene(QObject *parent) : QGraphicsScene(parent), board(nullptr) 
+{
+    current_mode = Mode::SELECT_ITEM;
+}
 
 void BoardGraphicsScene::load_board(std::string fname)
 {
@@ -38,8 +41,15 @@ void BoardGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsItem *item = itemAt(scene_pos, QTransform());
     std::cerr << "Mouse Clicked: " << scene_pos.rx() << ", " << scene_pos.ry() << std::endl;
 
-    if (item != nullptr) {
-        board->item_clicked(item);
-        update_graphics();
+    switch (current_mode) {
+    case Mode::SELECT_ITEM:
+        if (item != nullptr) {
+            board->item_clicked(item);
+            update_graphics();
+        }
+        break;
+
+    case Mode::INSERT_ITEM:
+        break;
     }
 }
