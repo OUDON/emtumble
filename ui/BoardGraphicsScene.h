@@ -2,6 +2,7 @@
 #define BOARD_GRAPHICS_SCENE_H
 
 #include "../Board.hpp"
+#include "../BoardItem.hpp"
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QObject>
@@ -17,7 +18,7 @@ public:
     void load_board(std::string fname);
     void set_as_image(bool _as_image);
     void step();
-    void set_mode(Mode mode, Item item = EMPTY);
+    void set_mode(Mode mode, BoardItem item = BoardItem::EMPTY);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -29,7 +30,7 @@ private:
     BoardGUI *board;
 
     Mode current_mode;
-    Item inserting_item;
+    BoardItem inserting_item;
 };
 
 #endif

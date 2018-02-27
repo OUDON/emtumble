@@ -16,9 +16,9 @@ SOURCE_DIR  = .
 
 INCLUDEPATH    += $SOURCE_DIR
 SOURCES        += $$files(*.cpp, true)
-HEADERS        += ui/mainwindow.h
-HEADERS        += ui/ScalableGraphicsView.h
-HEADERS        += ui/BoardGraphicsScene.h
+# HEADERS        += ui/mainwindow.h
+# HEADERS        += ui/ScalableGraphicsView.h
+# HEADERS        += ui/BoardGraphicsScene.h
 
 mac {
   CONFIG -= app_bundle

@@ -3,11 +3,12 @@
 void Board::flip_gears_dfs(int x, int y, std::set<std::pair<int, int>> visited)
 {
     visited.insert(std::make_pair(x, y));
-    Item &item = cells[y][x];
-    if (item != GEAR && item != GEAR_BIT_POINTING_LEFT && item != GEAR_BIT_POINTING_RIGHT) return;
+    BoardItem &item = cells[y][x];
+    if (item != BoardItem::GEAR && item != BoardItem::GEAR_BIT_POINTING_LEFT
+            && item != BoardItem::GEAR_BIT_POINTING_RIGHT) return;
 
-    if (item == GEAR_BIT_POINTING_LEFT) item = GEAR_BIT_POINTING_RIGHT;
-    else if (item == GEAR_BIT_POINTING_RIGHT) item = GEAR_BIT_POINTING_LEFT;
+    if (item == BoardItem::GEAR_BIT_POINTING_LEFT) item = BoardItem::GEAR_BIT_POINTING_RIGHT;
+    else if (item == BoardItem::GEAR_BIT_POINTING_RIGHT) item = BoardItem::GEAR_BIT_POINTING_LEFT;
 
     int dx[4] = {-1,  0, 1, 0};
     int dy[4] = { 0, -1, 0, 1};
@@ -29,14 +30,14 @@ void Board::flip_gears(int x, int y)
 
 void Board::flip_item(int x, int y)
 {
-    Item &cell = cells[y][x];
-    if (cell == BIT_POINTING_LEFT) {
-        cell = BIT_POINTING_RIGHT;
-    } else if (cell == BIT_POINTING_RIGHT) {
-        cell = BIT_POINTING_LEFT;
-    } else if (cell == GEAR_BIT_POINTING_LEFT ||
-               cell == GEAR_BIT_POINTING_RIGHT ||
-               cell == GEAR) {
+    BoardItem &cell = cells[y][x];
+    if (cell == BoardItem::BIT_POINTING_LEFT) {
+        cell = BoardItem::BIT_POINTING_RIGHT;
+    } else if (cell == BoardItem::BIT_POINTING_RIGHT) {
+        cell = BoardItem::BIT_POINTING_LEFT;
+    } else if (cell == BoardItem::GEAR_BIT_POINTING_LEFT ||
+               cell == BoardItem::GEAR_BIT_POINTING_RIGHT ||
+               cell == BoardItem::GEAR) {
         flip_gears(x, y);
     }
 }
@@ -54,7 +55,7 @@ std::vector<std::string> Board::remove_comments(std::vector<std::string> board_s
 Board::Board(int _width, int _height) : width(_width), height(_height)
 {
     ball = nullptr;
-    cells.assign(height, std::vector<Item>(width));
+    cells.assign(height, std::vector<BoardItem>(width));
 }
 
 Board::Board(std::vector<std::string> &board_str)
@@ -63,10 +64,10 @@ Board::Board(std::vector<std::string> &board_str)
     set_items_from_strings(board_str);
 }
 
-void Board::set_item(int x, int y, Item item)
+void Board::set_item(int x, int y, BoardItem item)
 {
-    if (item == SPAWN_BALL_BLUE || item == SPAWN_BALL_RED) {
-        Color color = (item == SPAWN_BALL_BLUE ? BLUE : RED);
+    if (item == BoardItem::SPAWN_BALL_BLUE || item == BoardItem::SPAWN_BALL_RED) {
+        Color color = (item == BoardItem::SPAWN_BALL_BLUE ? BLUE : RED);
         if (spawn_pos.count(color)) {
             std::cerr << "WARNING: The spawn point must appear exactly once in the board for each color." << std::endl;
         }
@@ -83,7 +84,7 @@ void Board::set_items_from_strings(std::vector<std::string> board_str)
     if (_height == 0) return;
 
     int _width = board_str[0].size();
-    cells.assign(_height, std::vector<Item>(_width));
+    cells.assign(_height, std::vector<BoardItem>(_width));
     if (_height && _width) {
         for (int y=0; y<_height; y++) {
             assert((int)board_str[y].size() == _width);
@@ -132,55 +133,55 @@ void Board::step()
     if (ball == nullptr) return;
     ball->step();
 
-    Item &cell = cells[ball->y][ball->x];
+    BoardItem &cell = cells[ball->y][ball->x];
     switch (cell) {
-    case RAMP_GOING_LEFT:
+    case BoardItem::RAMP_GOING_LEFT:
         ball->direction = -1;
         break;
 
-    case RAMP_GOING_RIGHT:
+    case BoardItem::RAMP_GOING_RIGHT:
         ball->direction = 1;
         break;
 
-    case BIT_POINTING_LEFT:
+    case BoardItem::BIT_POINTING_LEFT:
         ball->direction = 1;
-        cell = BIT_POINTING_RIGHT;
+        cell = BoardItem::BIT_POINTING_RIGHT;
         break;
 
-    case BIT_POINTING_RIGHT:
+    case BoardItem::BIT_POINTING_RIGHT:
         ball->direction = -1;
-        cell = BIT_POINTING_LEFT;
+        cell = BoardItem::BIT_POINTING_LEFT;
         break;
 
-    case GEAR_BIT_POINTING_LEFT:
+    case BoardItem::GEAR_BIT_POINTING_LEFT:
         ball->direction = 1;
         flip_gears(ball->x, ball->y);
         break;
 
-    case GEAR_BIT_POINTING_RIGHT:
+    case BoardItem::GEAR_BIT_POINTING_RIGHT:
         ball->direction = -1;
         flip_gears(ball->x, ball->y);
         break;
 
-    case GEAR:
+    case BoardItem::GEAR:
         flip_gears(ball->x, ball->y);
         break;
 
-    case INTER_CEPTER:
+    case BoardItem::INTER_CEPTER:
         ball->direction = 0;
         break;
 
-    case LEVER_BLUE:
+    case BoardItem::LEVER_BLUE:
         lever_pulled(BLUE);
         break;
 
-    case LEVER_RED:
+    case BoardItem::LEVER_RED:
         lever_pulled(RED);
         break;
 
-    case CROSS_OVER:
-    case SPAWN_BALL_BLUE:
-    case SPAWN_BALL_RED:
+    case BoardItem::CROSS_OVER:
+    case BoardItem::SPAWN_BALL_BLUE:
+    case BoardItem::SPAWN_BALL_RED:
         // do nothing
         break;
 
@@ -240,7 +241,7 @@ void BoardGUI::draw(QGraphicsScene *scene, bool as_image)
     }
 }
 
-QGraphicsItem* BoardGUI::add_rect(QRect rect, Item item, QGraphicsScene *scene, bool as_image) const
+QGraphicsItem* BoardGUI::add_rect(QRect rect, BoardItem item, QGraphicsScene *scene, bool as_image) const
 {
     QGraphicsItem *res;
     if (as_image) {
@@ -265,8 +266,15 @@ QRect BoardGUI::create_rect(int x, int y, int w, int h) const
 
 void BoardGUI::item_clicked(QGraphicsItem *gitem)
 {
-    int x = graphics_items.at(gitem).first;
-    int y = graphics_items.at(gitem).second;
+    std::pair<int, int> item_pos;
+    try {
+        item_pos = graphics_items.at(gitem);
+    } catch(std::out_of_range&) {
+        return;
+    }
+
+    int x = item_pos.first;
+    int y = item_pos.second;
     std::cerr << "Clicked: (" << x << ", " << y << ")" << std::endl;
 
     flip_item(x, y);
