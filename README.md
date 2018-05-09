@@ -1,5 +1,7 @@
 # emtumble
 
+![demo](https://raw.githubusercontent.com/wiki/OUDON/emtumble/images/demo.gif)
+
 This software is an emulator of [Turing Tumble](https://www.turingtumble.com/) written in C++.
 Turing Tumble is a marble-powered mechanical computer.
 By using this tool, you can play with Turing Tumble on your PC.
