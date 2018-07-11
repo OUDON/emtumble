@@ -275,7 +275,6 @@ void BoardGUI::item_clicked(QGraphicsItem *gitem)
 
     int x = item_pos.first;
     int y = item_pos.second;
-    std::cerr << "Clicked: (" << x << ", " << y << ")" << std::endl;
 
     flip_item(x, y);
 }

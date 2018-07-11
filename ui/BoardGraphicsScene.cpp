@@ -39,7 +39,6 @@ void BoardGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QPointF scene_pos = event->scenePos();
     QGraphicsItem *item = itemAt(scene_pos, QTransform());
-    std::cerr << "Mouse Clicked: " << scene_pos.rx() << ", " << scene_pos.ry() << std::endl;
 
     switch (current_mode) {
     case Mode::SELECT_ITEM:

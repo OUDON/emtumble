@@ -17,10 +17,6 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new BoardGraphicsScene(this);
     scene->set_as_image(ui->radio_button_draw_icon->isChecked());
     ui->graphics_view->setScene(scene);
-
-    for (auto item : BoardItem()) {
-        std::cerr << std::underlying_type<BoardItem>::type(item) << std::endl;
-    }
 }
 
 MainWindow::~MainWindow()
