@@ -28,11 +28,11 @@ class Board {
 protected:
     Ball *ball;
     std::vector<Ball> results;
-    std::vector<std::vector<BoardItem>> cells;
+    std::vector<std::vector<BoardItem::ItemType>> cells;
     std::map<Color, Position> spawn_pos;
 
 private:
-    const std::map<BoardItem, char> item_to_symbol = {
+    const std::map<BoardItem::ItemType, char> item_to_symbol = {
         {BoardItem::EMPTY, ' '},
         {BoardItem::RAMP_GOING_LEFT, '<'},
         {BoardItem::RAMP_GOING_RIGHT, '>'},
@@ -49,7 +49,7 @@ private:
         {BoardItem::LEVER_RED, 'r'},
     };
 
-    const std::map<char, BoardItem> symbol_to_item = {
+    const std::map<char, BoardItem::ItemType> symbol_to_item = {
         {' ', BoardItem::EMPTY},
         {'.', BoardItem::EMPTY},
         {'<', BoardItem::RAMP_GOING_LEFT},
@@ -79,7 +79,7 @@ public:
 
     Board(int _width, int _height);
     Board(std::vector<std::string> &board_str);
-    void set_item(int x, int y, BoardItem item);
+    void set_item(int x, int y, BoardItem::ItemType item);
     void set_items_from_strings(std::vector<std::string> board_str);
     
     void lever_pulled(Color color);
@@ -91,7 +91,10 @@ public:
 };
 
 class BoardGUI : public Board {
-    const std::map<BoardItem, QColor> item_to_color = {
+    int zoom_rate; // %
+
+public:
+    const std::map<BoardItem::ItemType, QColor> item_to_color = {
         {BoardItem::EMPTY, Qt::white},
         {BoardItem::RAMP_GOING_LEFT, Qt::green},
         {BoardItem::RAMP_GOING_RIGHT, Qt::darkGreen},
@@ -108,33 +111,15 @@ class BoardGUI : public Board {
         {BoardItem::LEVER_RED, QColor("lightpink")},
     };
 
-    const std::map<BoardItem, QPixmap> item_to_pixmap = {
-        {BoardItem::EMPTY,                   QPixmap("./img/elements/empty.png")},
-        {BoardItem::RAMP_GOING_LEFT,         QPixmap("./img/elements/ramp_going_left.png")},
-        {BoardItem::RAMP_GOING_RIGHT,        QPixmap("./img/elements/ramp_going_right.png")},
-        {BoardItem::BIT_POINTING_LEFT,       QPixmap("./img/elements/bit_pointing_left.png")},
-        {BoardItem::BIT_POINTING_RIGHT,      QPixmap("./img/elements/bit_pointing_right.png")},
-        {BoardItem::GEAR_BIT_POINTING_LEFT,  QPixmap("./img/elements/gear_bit_pointing_left.png")},
-        {BoardItem::GEAR_BIT_POINTING_RIGHT, QPixmap("./img/elements/gear_bit_pointing_right.png")},
-        {BoardItem::GEAR,                    QPixmap("./img/elements/gear.png")},
-        {BoardItem::CROSS_OVER,              QPixmap("./img/elements/crossover.png")},
-        {BoardItem::INTER_CEPTER,            QPixmap("./img/elements/interceptor.png")},
-        {BoardItem::SPAWN_BALL_BLUE,         QPixmap("./img/elements/spawn_ball_blue.png")},
-        {BoardItem::SPAWN_BALL_RED,          QPixmap("./img/elements/spawn_ball_red.png")},
-        {BoardItem::LEVER_BLUE,              QPixmap("./img/elements/empty.png")},
-        {BoardItem::LEVER_RED,               QPixmap("./img/elements/empty.png")},
-    };
-
-    int zoom_rate; // %
-
-public:
   BoardGUI(std::vector<std::string> &board_str);
   void draw(QGraphicsScene *scene, bool as_image);
   void item_clicked(QGraphicsItem *gitem);
+  void change_clicked_item(QGraphicsItem *gitem, BoardItem::ItemType new_item_type);
 
 private:
-  QGraphicsItem* add_rect(QRect rect, BoardItem item, QGraphicsScene *scene, bool as_image) const;
+  QGraphicsItem* add_rect(QRect rect, BoardItem::ItemType item, QGraphicsScene *scene, bool as_image) const;
   QRect create_rect(int x, int y, int w, int h) const;
+  std::pair<int, int> gitem2idx(QGraphicsItem *gitem);
 
   std::map<QGraphicsItem*, std::pair<int, int>> graphics_items;
 };

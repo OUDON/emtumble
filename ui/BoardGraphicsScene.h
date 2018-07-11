@@ -18,7 +18,7 @@ public:
     void load_board(std::string fname);
     void set_as_image(bool _as_image);
     void step();
-    void set_mode(Mode mode, BoardItem item = BoardItem::EMPTY);
+    void set_mode(Mode mode, BoardItem::ItemType item = BoardItem::EMPTY);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -30,7 +30,7 @@ private:
     BoardGUI *board;
 
     Mode current_mode;
-    BoardItem inserting_item;
+    BoardItem::ItemType inserting_item;
 };
 
 #endif

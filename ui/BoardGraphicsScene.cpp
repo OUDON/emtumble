@@ -49,6 +49,16 @@ void BoardGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         break;
 
     case Mode::INSERT_ITEM:
+        if (item != nullptr) {
+            board->change_clicked_item(item, inserting_item);
+            update_graphics();
+        }
         break;
     }
+}
+
+void BoardGraphicsScene::set_mode(Mode mode, BoardItem::ItemType item)
+{
+    current_mode = mode;
+    inserting_item = item;
 }

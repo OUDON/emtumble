@@ -3,7 +3,7 @@
 void Board::flip_gears_dfs(int x, int y, std::set<std::pair<int, int>> visited)
 {
     visited.insert(std::make_pair(x, y));
-    BoardItem &item = cells[y][x];
+    BoardItem::ItemType &item = cells[y][x];
     if (item != BoardItem::GEAR && item != BoardItem::GEAR_BIT_POINTING_LEFT
             && item != BoardItem::GEAR_BIT_POINTING_RIGHT) return;
 
@@ -30,7 +30,7 @@ void Board::flip_gears(int x, int y)
 
 void Board::flip_item(int x, int y)
 {
-    BoardItem &cell = cells[y][x];
+    BoardItem::ItemType &cell = cells[y][x];
     if (cell == BoardItem::BIT_POINTING_LEFT) {
         cell = BoardItem::BIT_POINTING_RIGHT;
     } else if (cell == BoardItem::BIT_POINTING_RIGHT) {
@@ -55,7 +55,7 @@ std::vector<std::string> Board::remove_comments(std::vector<std::string> board_s
 Board::Board(int _width, int _height) : width(_width), height(_height)
 {
     ball = nullptr;
-    cells.assign(height, std::vector<BoardItem>(width));
+    cells.assign(height, std::vector<BoardItem::ItemType>(width));
 }
 
 Board::Board(std::vector<std::string> &board_str)
@@ -64,7 +64,7 @@ Board::Board(std::vector<std::string> &board_str)
     set_items_from_strings(board_str);
 }
 
-void Board::set_item(int x, int y, BoardItem item)
+void Board::set_item(int x, int y, BoardItem::ItemType item)
 {
     if (item == BoardItem::SPAWN_BALL_BLUE || item == BoardItem::SPAWN_BALL_RED) {
         Color color = (item == BoardItem::SPAWN_BALL_BLUE ? BLUE : RED);
@@ -84,7 +84,7 @@ void Board::set_items_from_strings(std::vector<std::string> board_str)
     if (_height == 0) return;
 
     int _width = board_str[0].size();
-    cells.assign(_height, std::vector<BoardItem>(_width));
+    cells.assign(_height, std::vector<BoardItem::ItemType>(_width));
     if (_height && _width) {
         for (int y=0; y<_height; y++) {
             assert((int)board_str[y].size() == _width);
@@ -133,7 +133,7 @@ void Board::step()
     if (ball == nullptr) return;
     ball->step();
 
-    BoardItem &cell = cells[ball->y][ball->x];
+    BoardItem::ItemType &cell = cells[ball->y][ball->x];
     switch (cell) {
     case BoardItem::RAMP_GOING_LEFT:
         ball->direction = -1;
@@ -241,11 +241,11 @@ void BoardGUI::draw(QGraphicsScene *scene, bool as_image)
     }
 }
 
-QGraphicsItem* BoardGUI::add_rect(QRect rect, BoardItem item, QGraphicsScene *scene, bool as_image) const
+QGraphicsItem* BoardGUI::add_rect(QRect rect, BoardItem::ItemType item, QGraphicsScene *scene, bool as_image) const
 {
     QGraphicsItem *res;
     if (as_image) {
-        QPixmap pixmap = item_to_pixmap.at(item);
+        QPixmap pixmap = BoardItem::pixmap(item);
         pixmap = pixmap.scaled(rect.size(), Qt::KeepAspectRatioByExpanding);
         QGraphicsPixmapItem *pixmap_item = scene->addPixmap(pixmap);
         pixmap_item->setPos(rect.topLeft());
@@ -264,17 +264,30 @@ QRect BoardGUI::create_rect(int x, int y, int w, int h) const
     return rect;
 }
 
+std::pair<int, int> BoardGUI::gitem2idx(QGraphicsItem *gitem)
+{
+    try {
+        std::pair<int, int> item_pos = graphics_items.at(gitem);
+        return item_pos;
+    } catch(std::out_of_range&) {
+        return std::make_pair(-1, -1);
+    }
+}
+
 void BoardGUI::item_clicked(QGraphicsItem *gitem)
 {
-    std::pair<int, int> item_pos;
-    try {
-        item_pos = graphics_items.at(gitem);
-    } catch(std::out_of_range&) {
-        return;
-    }
-
-    int x = item_pos.first;
-    int y = item_pos.second;
-
+    std::pair<int, int> item_idx = gitem2idx(gitem);
+    int x = item_idx.first;
+    int y = item_idx.second;
+    if (x < 0 || y < 0) return;
     flip_item(x, y);
+}
+
+void BoardGUI::change_clicked_item(QGraphicsItem *gitem, BoardItem::ItemType new_item_type)
+{
+    std::pair<int, int> item_idx = gitem2idx(gitem);
+    int x = item_idx.first;
+    int y = item_idx.second;
+    if (x < 0 || y < 0) return;
+    set_item(x, y, new_item_type);
 }

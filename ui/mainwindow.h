@@ -6,6 +6,8 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QWheelEvent>
+#include <QButtonGroup>
+#include <QToolButton>
 #include "./BoardGraphicsScene.h"
 
 namespace Ui {
@@ -26,16 +28,20 @@ private slots:
     void on_button_play_clicked();
     void on_radio_button_draw_icon_toggled(bool checked);
     void on_slider_speed_valueChanged(int value);
-
+    void onPalletButtonClicked(int id);
     void step_board();
 
 private:
     Ui::MainWindow *ui;
     BoardGraphicsScene *scene;
     QTimer *timer_simulation_delay;
+    QButtonGroup *pallet_button_group;
 
     void load_board(std::string fname);
     int get_timer_delay() const;
+    void init_pallet();
+    QWidget* create_cell_widget(QPixmap icon, int id);
+    QWidget* create_cell_widget(BoardItem::ItemType item);
 };
 
 #endif // MAINWINDOW_H
