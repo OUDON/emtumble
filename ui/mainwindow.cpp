@@ -6,8 +6,7 @@
 #include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow(parent), ui(new Ui::MainWindow), board(nullptr)
 {
     ui->setupUi(this);
 
@@ -28,12 +27,37 @@ MainWindow::~MainWindow()
 
 void MainWindow::step_board()
 {
-    scene->step();
+    if (board == nullptr) return;
+    board->step();
+    scene->update_graphics(board);
+
+    std::string outputs = board->get_results();
+    std::string outputs_text;
+    for (auto output : outputs) {
+        std::string tmp;
+        if (output == 'b') {
+            tmp = "<font color='blue'>O</font>";
+        } else if (output == 'r') {
+            tmp = "<font color='red'>O</font>";
+        }
+        outputs_text = tmp + outputs_text;
+    }
+    ui->text_outputs->setText(QString::fromStdString(outputs_text));
+    ui->text_outputs->setAlignment(Qt::AlignRight);
 }
 
 void MainWindow::load_board(std::string fname)
 {
-    scene->load_board(fname);
+    if (board != nullptr) delete board;
+    std::vector<std::string> board_str = common::read_file(fname);
+    board = new BoardGUI(board_str);
+    board->lever_pulled(BLUE);
+    scene->update_graphics(board);
+}
+
+BoardGUI* MainWindow::get_board()
+{
+    return board;
 }
 
 int MainWindow::get_timer_delay() const
@@ -66,6 +90,7 @@ void MainWindow::on_button_play_clicked()
 void MainWindow::on_radio_button_draw_icon_toggled(bool checked)
 {
     scene->set_as_image(ui->radio_button_draw_icon->isChecked());
+    scene->update_graphics(board);
 }
 
 void MainWindow::on_slider_speed_valueChanged(int value)

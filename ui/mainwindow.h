@@ -14,6 +14,7 @@ namespace Ui {
 class MainWindow;
 }
 
+class BoardGraphicsScene;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -21,6 +22,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    BoardGUI* get_board();
 
 private slots:
     void on_button_step_clicked();
@@ -33,9 +35,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    BoardGraphicsScene *scene;
     QTimer *timer_simulation_delay;
     QButtonGroup *pallet_button_group;
+    BoardGraphicsScene *scene;
+    BoardGUI *board;
 
     void load_board(std::string fname);
     int get_timer_delay() const;
