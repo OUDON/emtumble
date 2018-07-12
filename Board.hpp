@@ -94,23 +94,6 @@ class BoardGUI : public Board {
     int zoom_rate; // %
 
 public:
-    const std::map<BoardItem::ItemType, QColor> item_to_color = {
-        {BoardItem::EMPTY, Qt::white},
-        {BoardItem::RAMP_GOING_LEFT, Qt::green},
-        {BoardItem::RAMP_GOING_RIGHT, Qt::darkGreen},
-        {BoardItem::BIT_POINTING_LEFT, Qt::blue},
-        {BoardItem::BIT_POINTING_RIGHT, Qt::darkBlue},
-        {BoardItem::GEAR_BIT_POINTING_LEFT, Qt::red},
-        {BoardItem::GEAR_BIT_POINTING_RIGHT, Qt::darkRed},
-        {BoardItem::GEAR, Qt::magenta},
-        {BoardItem::CROSS_OVER, Qt::yellow},
-        {BoardItem::INTER_CEPTER, Qt::gray},
-        {BoardItem::SPAWN_BALL_BLUE, QColor("cornflowerblue")},
-        {BoardItem::SPAWN_BALL_RED, QColor("coral")},
-        {BoardItem::LEVER_BLUE, QColor("lightskyblue")},
-        {BoardItem::LEVER_RED, QColor("lightpink")},
-    };
-
   BoardGUI(std::vector<std::string> &board_str);
   void draw(QGraphicsScene *scene, bool as_image);
   void item_clicked(QGraphicsItem *gitem);

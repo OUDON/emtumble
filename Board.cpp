@@ -253,7 +253,7 @@ QGraphicsItem* BoardGUI::add_rect(QRect rect, BoardItem::ItemType item, QGraphic
     } else {
         QPen pen(Qt::black);
         pen.setWidth(1);
-        res =  scene->addRect(rect, pen, QBrush(item_to_color.at(item)));
+        res =  scene->addRect(rect, pen, QBrush(BoardItem::color(item)));
     }
     return res;
 }

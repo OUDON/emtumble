@@ -40,6 +40,24 @@ namespace BoardItem {
         {LEVER_RED,               "./img/elements/empty.png"},
     };
 
+    const std::map<BoardItem::ItemType, QColor> item_to_color = {
+        {EMPTY, Qt::white},
+        {RAMP_GOING_LEFT, Qt::green},
+        {RAMP_GOING_RIGHT, Qt::darkGreen},
+        {BIT_POINTING_LEFT, Qt::blue},
+        {BIT_POINTING_RIGHT, Qt::darkBlue},
+        {GEAR_BIT_POINTING_LEFT, Qt::red},
+        {GEAR_BIT_POINTING_RIGHT, Qt::darkRed},
+        {GEAR, Qt::magenta},
+        {CROSS_OVER, Qt::yellow},
+        {INTER_CEPTER, Qt::gray},
+        {SPAWN_BALL_BLUE, QColor("cornflowerblue")},
+        {SPAWN_BALL_RED, QColor("coral")},
+        {LEVER_BLUE, QColor("lightskyblue")},
+        {LEVER_RED, QColor("lightpink")},
+    };
+
+    QColor color(ItemType item);
     QPixmap pixmap(ItemType item);
 }
 
