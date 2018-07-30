@@ -34,10 +34,10 @@ namespace BoardItem {
         {GEAR,                    "./img/elements/gear.png"},
         {CROSS_OVER,              "./img/elements/crossover.png"},
         {INTER_CEPTER,            "./img/elements/interceptor.png"},
-        {SPAWN_BALL_BLUE,         "./img/elements/spawn_ball_blue.png"},
-        {SPAWN_BALL_RED,          "./img/elements/spawn_ball_red.png"},
-        {LEVER_BLUE,              "./img/elements/empty.png"},
-        {LEVER_RED,               "./img/elements/empty.png"},
+        {SPAWN_BALL_BLUE,         "./img/elements/releaser_blue.png"},
+        {SPAWN_BALL_RED,          "./img/elements/releaser_red.png"},
+        {LEVER_BLUE,              "./img/elements/lever_blue.png"},
+        {LEVER_RED,               "./img/elements/lever_red.png"},
     };
 
     const std::map<BoardItem::ItemType, QColor> item_to_color = {

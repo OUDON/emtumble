@@ -122,6 +122,10 @@ void MainWindow::init_pallet()
     layout->addWidget(create_cell_widget(BoardItem::GEAR_BIT_POINTING_LEFT),  4, 0);
     layout->addWidget(create_cell_widget(BoardItem::GEAR_BIT_POINTING_RIGHT), 4, 1);
     layout->addWidget(create_cell_widget(BoardItem::GEAR),                  5, 0);
+    layout->addWidget(create_cell_widget(BoardItem::SPAWN_BALL_BLUE),       6, 0);
+    layout->addWidget(create_cell_widget(BoardItem::SPAWN_BALL_RED),        6, 1);
+    layout->addWidget(create_cell_widget(BoardItem::LEVER_BLUE),            7, 0);
+    layout->addWidget(create_cell_widget(BoardItem::LEVER_RED),             7, 1);
 
     pallet_button_group->button(100)->setChecked(true);
 }
