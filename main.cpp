@@ -12,21 +12,25 @@
 
 int main(int argc, char *argv[])
 {    
-    if (argc != 2 && argc != 3) {
-        std::cout << "Usage: emtumble filename [--gui | --cli]" << std::endl;
+    if (argc != 1 && argc != 3) {
+        std::cout << "Usage: emtumble [--cli filename]" << std::endl;
         return EXIT_FAILURE;
     }
 
-    std::string filename = argv[1];
-    std::vector<std::string> board_str = common::read_file(filename);
-    Board board(board_str);
-    Emulator emu(board);
-
-    if (argc == 2 || std::string(argv[2]) == "--gui") {
+    if (argc == 1) {
         GUI::get_instance().start(&argc, argv);
     } else {
-        emu.run(true);
-        std::cout << "===============" << std::endl;
-        std::cout << emu.get_results() << std::endl;
+        if (std::string(argv[1]) == "--cli") {
+            std::string filename = argv[2];
+            std::vector<std::string> board_str = common::read_file(filename);
+            Board board(board_str);
+            Emulator emu(board);
+            emu.run(true);
+            std::cout << "===============" << std::endl;
+            std::cout << emu.get_results() << std::endl;
+        } else {
+            std::cerr << "Invalid command line arugments" << std::endl;
+            return EXIT_FAILURE;
+        }
     }
 }
