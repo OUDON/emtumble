@@ -2,7 +2,9 @@
 
 QPixmap BoardItem::pixmap(BoardItem::ItemType item)
 {
-    return QPixmap(image_filename.at(item).c_str());
+    if (qpixmap_memo.count(item)) return qpixmap_memo.at(item);
+    QPixmap image = QPixmap(image_filename.at(item).c_str());
+    return qpixmap_memo[item] = image;
 }
 
 QColor BoardItem::color(BoardItem::ItemType item)

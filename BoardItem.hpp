@@ -4,6 +4,7 @@
 #include <QPixmap>
 #include <type_traits>
 #include <string>
+#include <map>
 
 namespace BoardItem {
     enum ItemType {
@@ -59,6 +60,7 @@ namespace BoardItem {
 
     QColor color(ItemType item);
     QPixmap pixmap(ItemType item);
+    static std::map<BoardItem::ItemType, QPixmap> qpixmap_memo;
 }
 
 #endif
