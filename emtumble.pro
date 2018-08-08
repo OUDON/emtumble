@@ -1,5 +1,7 @@
 TARGET = emtumble
 CONFIG += c++14
+VERSION = 0.2.0
+DEFINES += VERSION_STRING=\\\"$${VERSION}\\\"
 
 QT += core gui widgets
 QMAKE_CXX      = g++-6
