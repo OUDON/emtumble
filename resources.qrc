@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/cursol.png</file>
+        <file>img/elements/bit_pointing_left.png</file>
+        <file>img/elements/bit_pointing_right.png</file>
+        <file>img/elements/crossover.png</file>
+        <file>img/elements/empty.png</file>
+        <file>img/elements/gear_bit_pointing_left.png</file>
+        <file>img/elements/gear_bit_pointing_right.png</file>
+        <file>img/elements/gear.png</file>
+        <file>img/elements/interceptor.png</file>
+        <file>img/elements/lever_blue.png</file>
+        <file>img/elements/lever_red.png</file>
+        <file>img/elements/ramp_going_left.png</file>
+        <file>img/elements/ramp_going_right.png</file>
+        <file>img/elements/releaser_blue.png</file>
+        <file>img/elements/releaser_red.png</file>
+        <file>img/elements/spawn_ball_blue.png</file>
+        <file>img/elements/spawn_ball_red.png</file>
+    </qresource>
+</RCC>

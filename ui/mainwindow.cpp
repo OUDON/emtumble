@@ -111,7 +111,7 @@ void MainWindow::init_pallet()
     layout->setSpacing(0);
     layout->setMargin(0);
 
-    layout->addWidget(create_cell_widget(QPixmap("./img/cursol.png"), 100), 0, 0);
+    layout->addWidget(create_cell_widget(QPixmap(":/img/cursol.png"), 100), 0, 0);
     layout->addWidget(create_cell_widget(BoardItem::EMPTY),                 0, 1);
     layout->addWidget(create_cell_widget(BoardItem::RAMP_GOING_LEFT),       1, 0);
     layout->addWidget(create_cell_widget(BoardItem::RAMP_GOING_RIGHT),      1, 1);
