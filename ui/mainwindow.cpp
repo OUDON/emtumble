@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphics_view->setScene(scene);
 
     init_pallet();
+    load_board(":example/example1.txt");
 }
 
 MainWindow::~MainWindow()
@@ -49,7 +50,8 @@ void MainWindow::step_board()
 void MainWindow::load_board(std::string fname)
 {
     if (board != nullptr) delete board;
-    std::vector<std::string> board_str = common::read_file(fname);
+    std::vector<std::string> board_str = common::read_file_qt(fname);
+
     board = new BoardGUI(board_str);
     board->lever_pulled(BLUE);
     scene->update_graphics(board);
