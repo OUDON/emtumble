@@ -17,5 +17,9 @@
         <file>img/elements/releaser_red.png</file>
         <file>img/elements/spawn_ball_blue.png</file>
         <file>img/elements/spawn_ball_red.png</file>
+
+        <file>example/example1.txt</file>
+        <file>example/example2.txt</file>
+        <file>example/example_big_board.txt</file>
     </qresource>
 </RCC>
