@@ -78,6 +78,18 @@ void MainWindow::on_action_open_triggered()
     load_board(file_name.toStdString());
 }
 
+void MainWindow::on_action_toggle_outputs_bar_triggered()
+{
+    if (ui->text_outputs->isVisible()) {
+        ui->text_outputs->setVisible(false);
+        ui->action_toggle_outputs_bar->setText("Show Marble Tray");
+    } else {
+        ui->text_outputs->setVisible(true);
+        ui->action_toggle_outputs_bar->setText("Hide Marble Tray");
+    }
+
+}
+
 void MainWindow::on_button_play_clicked()
 {
     if (timer_simulation_delay->isActive()) {

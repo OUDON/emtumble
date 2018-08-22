@@ -26,7 +26,6 @@ HEADERS        += ui/mainwindow.h
 mac {
 #  CONFIG -= app_bundle
 #  RPATHDIR *= @loader_path/../Frameworks
-  LIBS += -framework Cocoa
   
   IMAGE_FILES.files = $$PWD/img
   IMAGE_FILES.path  = Contents/Resources
