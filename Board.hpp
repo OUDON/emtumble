@@ -33,7 +33,8 @@ protected:
 
 private:
     const std::map<BoardItem::ItemType, char> item_to_symbol = {
-        {BoardItem::EMPTY, ' '},
+        {BoardItem::EMPTY, '.'},
+        {BoardItem::EMPTY_GEAR_ONLY, ' '},
         {BoardItem::RAMP_GOING_LEFT, '<'},
         {BoardItem::RAMP_GOING_RIGHT, '>'},
         {BoardItem::BIT_POINTING_LEFT, '('},

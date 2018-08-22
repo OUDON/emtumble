@@ -72,6 +72,8 @@ void Board::set_item(int x, int y, BoardItem::ItemType item)
             std::cerr << "WARNING: The spawn point must appear exactly once in the board for each color." << std::endl;
         }
         spawn_pos[color] = Position(x, y);
+    } else if (item == BoardItem::EMPTY || item == BoardItem::EMPTY_GEAR_ONLY) {
+        item = (x+y)%2 == 0 ? BoardItem::EMPTY : BoardItem::EMPTY_GEAR_ONLY;
     }
     cells[y][x] = item;
 }

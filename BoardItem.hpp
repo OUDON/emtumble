@@ -9,6 +9,7 @@
 namespace BoardItem {
     enum ItemType {
         EMPTY,
+        EMPTY_GEAR_ONLY,
         RAMP_GOING_LEFT,
         RAMP_GOING_RIGHT,
         BIT_POINTING_LEFT,
@@ -26,6 +27,7 @@ namespace BoardItem {
 
     const std::map<ItemType, std::string> image_filename = {
         {EMPTY,                   ":/img/elements/empty.png"},
+        {EMPTY_GEAR_ONLY,         ":/img/elements/empty_gear_only.png"},
         {RAMP_GOING_LEFT,         ":/img/elements/ramp_going_left.png"},
         {RAMP_GOING_RIGHT,        ":/img/elements/ramp_going_right.png"},
         {BIT_POINTING_LEFT,       ":/img/elements/bit_pointing_left.png"},
@@ -43,6 +45,7 @@ namespace BoardItem {
 
     const std::map<BoardItem::ItemType, QColor> item_to_color = {
         {EMPTY, Qt::white},
+        {EMPTY_GEAR_ONLY, Qt::white},
         {RAMP_GOING_LEFT, Qt::green},
         {RAMP_GOING_RIGHT, Qt::darkGreen},
         {BIT_POINTING_LEFT, Qt::blue},
