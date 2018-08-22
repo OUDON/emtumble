@@ -74,14 +74,16 @@ private:
 
 protected:
     void flip_item(int x, int y);
+    BoardItem::ItemType empty_cell_type(int x, int y);
     
 public:
     int width, height;
 
     Board(int _width, int _height);
     Board(std::vector<std::string> &board_str);
-    void set_item(int x, int y, BoardItem::ItemType item);
+    bool set_item(int x, int y, BoardItem::ItemType item);
     void set_items_from_strings(std::vector<std::string> board_str);
+    bool is_valid_item(int x, int y, BoardItem::ItemType item);
     
     void lever_pulled(Color color);
     bool add_ball(Color color);
@@ -104,6 +106,5 @@ private:
   QGraphicsItem* add_rect(QRect rect, BoardItem::ItemType item, QGraphicsScene *scene, bool as_image) const;
   QRect create_rect(int x, int y, int w, int h) const;
   std::pair<int, int> gitem2idx(QGraphicsItem *gitem);
-
   std::map<QGraphicsItem*, std::pair<int, int>> graphics_items;
 };

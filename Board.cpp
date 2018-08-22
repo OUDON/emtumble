@@ -64,7 +64,7 @@ Board::Board(std::vector<std::string> &board_str)
     set_items_from_strings(board_str);
 }
 
-void Board::set_item(int x, int y, BoardItem::ItemType item)
+bool Board::set_item(int x, int y, BoardItem::ItemType item)
 {
     if (item == BoardItem::SPAWN_BALL_BLUE || item == BoardItem::SPAWN_BALL_RED) {
         Color color = (item == BoardItem::SPAWN_BALL_BLUE ? BLUE : RED);
@@ -73,9 +73,13 @@ void Board::set_item(int x, int y, BoardItem::ItemType item)
         }
         spawn_pos[color] = Position(x, y);
     } else if (item == BoardItem::EMPTY || item == BoardItem::EMPTY_GEAR_ONLY) {
-        item = (x+y)%2 == 0 ? BoardItem::EMPTY : BoardItem::EMPTY_GEAR_ONLY;
+        item = empty_cell_type(x, y);
     }
-    cells[y][x] = item;
+    if (is_valid_item(x, y, item)) {
+        cells[y][x] = item;
+        return true;
+    }
+    return false;
 }
 
 void Board::set_items_from_strings(std::vector<std::string> board_str)
@@ -292,4 +296,16 @@ void BoardGUI::change_clicked_item(QGraphicsItem *gitem, BoardItem::ItemType new
     int y = item_idx.second;
     if (x < 0 || y < 0) return;
     set_item(x, y, new_item_type);
+}
+
+BoardItem::ItemType Board::empty_cell_type(int x, int y)
+{
+    return (x+y)%2 == 0 ? BoardItem::EMPTY : BoardItem::EMPTY_GEAR_ONLY;
+}
+
+bool Board::is_valid_item(int x, int y, BoardItem::ItemType item)
+{
+    if (item == BoardItem::ItemType::GEAR || item == BoardItem::ItemType::EMPTY ||
+            item == BoardItem::ItemType::EMPTY_GEAR_ONLY) return true;
+    return empty_cell_type(x, y) == BoardItem::ItemType::EMPTY;
 }
