@@ -210,10 +210,16 @@ p, li { white-space: pre-wrap; }
    <property name="toolTip">
     <string>Open file</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="action_toggle_outputs_bar">
    <property name="text">
     <string>Hide Mable Tray</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+M</string>
    </property>
   </action>
  </widget>

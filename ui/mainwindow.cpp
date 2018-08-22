@@ -75,7 +75,9 @@ void MainWindow::on_button_step_clicked()
 void MainWindow::on_action_open_triggered()
 {
     QString file_name = QFileDialog::getOpenFileName(this, "select file");
-    load_board(file_name.toStdString());
+    if (!file_name.isEmpty() && !file_name.isNull()) {
+        load_board(file_name.toStdString());
+    }
 }
 
 void MainWindow::on_action_toggle_outputs_bar_triggered()
