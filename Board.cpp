@@ -148,12 +148,13 @@ bool Board::is_runnning()
     return (ball->direction != 0);
 }
 
-void Board::step()
+bool Board::step()
 {
-    if (ball == nullptr) return;
+    if (ball == nullptr) return false;
     ball->step();
 
     BoardItem::ItemType &cell = cells[ball->y][ball->x];
+    bool continuing = true;
     switch (cell) {
     case BoardItem::RAMP_GOING_LEFT:
         ball->direction = -1;
@@ -189,6 +190,7 @@ void Board::step()
 
     case BoardItem::INTER_CEPTER:
         ball->direction = 0;
+        continuing = false;
         break;
 
     case BoardItem::LEVER_BLUE:
@@ -208,6 +210,8 @@ void Board::step()
     default:
         std::cerr << "WARNING: The ball is arrived at (" << ball->x << ", " << ball->y << "), but this cell is given no action." << std::endl;
     }
+
+    return continuing;
 }
 
 void Board::print() const

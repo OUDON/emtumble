@@ -89,7 +89,7 @@ public:
     void lever_pulled(Color color);
     bool add_ball(Color color);
     bool is_runnning();
-    void step();
+    bool step();
     void print() const;
     std::string get_results() const;
 };

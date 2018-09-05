@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     timer_simulation_delay = new QTimer(this);
-    connect(timer_simulation_delay, SIGNAL(timeout()), this, SLOT(step_board()));
+    connect(timer_simulation_delay, SIGNAL(timeout()), this, SLOT(step_board_from_timer()));
 
     scene = new BoardGraphicsScene(this);
     scene->set_as_image(ui->radio_button_draw_icon->isChecked());
@@ -26,12 +26,13 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::step_board()
+bool MainWindow::step_board()
 {
-    if (board == nullptr) return;
-    board->step();
+    if (board == nullptr) return false;
+    bool continuing = board->step();
     scene->update_graphics(board);
 
+    /* TODO: Make more efficient */
     std::string outputs = board->get_results();
     std::string outputs_text;
     for (auto output : outputs) {
@@ -45,6 +46,15 @@ void MainWindow::step_board()
     }
     ui->text_outputs->setText(QString::fromStdString(outputs_text));
     ui->text_outputs->setAlignment(Qt::AlignRight);
+
+    return continuing;
+}
+
+void MainWindow::step_board_from_timer()
+{
+    if (!step_board()) {
+        if (timer_simulation_delay->isActive()) stop_timer();
+    }
 }
 
 void MainWindow::load_board(std::string fname)
@@ -104,11 +114,25 @@ void MainWindow::on_action_clear_board_triggered()
 void MainWindow::on_button_play_clicked()
 {
     if (timer_simulation_delay->isActive()) {
-        timer_simulation_delay->stop();
-        ui->button_play->setText("Play");
+        stop_timer();
     } else {
+        start_timer();
+    }
+}
+
+void MainWindow::start_timer()
+{
+    if (!timer_simulation_delay->isActive()) {
         timer_simulation_delay->start(get_timer_delay());
         ui->button_play->setText("Stop");
+    }
+}
+
+void MainWindow::stop_timer()
+{
+    if (timer_simulation_delay->isActive()) {
+        timer_simulation_delay->stop();
+        ui->button_play->setText("Play");
     }
 }
 

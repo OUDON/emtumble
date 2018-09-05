@@ -33,9 +33,8 @@ private slots:
     void on_radio_button_draw_icon_toggled(bool checked);
     void on_slider_speed_valueChanged(int value);
     void onPalletButtonClicked(int id);
-    void step_board();
-
-
+    bool step_board();
+    void step_board_from_timer();
 
 private:
     Ui::MainWindow *ui;
@@ -46,6 +45,8 @@ private:
 
     void load_board(std::string fname);
     int get_timer_delay() const;
+    void start_timer();
+    void stop_timer();
     void init_pallet();
     QWidget* create_cell_widget(QPixmap icon, int id);
     QWidget* create_cell_widget(BoardItem::ItemType item);
