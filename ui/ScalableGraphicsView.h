@@ -12,11 +12,13 @@
 class ScalableGraphicsView : public QGraphicsView {
 public:
     ScalableGraphicsView(QWidget *parent);
+    void wrap_content_height();
 
 protected:
   virtual void wheelEvent(QWheelEvent *event);
 
 private:
+  void do_scale();
 
   int scale_factor_int = 100; // %
 };

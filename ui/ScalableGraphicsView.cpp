@@ -16,8 +16,19 @@ void ScalableGraphicsView::wheelEvent(QWheelEvent *event)
     scale_factor_int += steps;
     scale_factor_int = std::min(scale_factor_int, 1000);
     scale_factor_int = std::max(scale_factor_int, 10);
+    do_scale();
+}
 
+void ScalableGraphicsView::do_scale()
+{
     qreal factor = 1.0 * qreal(scale_factor_int) / 100.0;
     resetMatrix();
     scale(factor, factor);
+}
+
+void ScalableGraphicsView::wrap_content_height()
+{
+    QRectF scene_rect = sceneRect();
+    scale_factor_int = height() / scene_rect.height() * 100;
+    do_scale();
 }

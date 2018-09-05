@@ -16,8 +16,9 @@ MainWindow::MainWindow(QWidget *parent) :
     scene = new BoardGraphicsScene(this);
     scene->set_as_image(ui->radio_button_draw_icon->isChecked());
     ui->graphics_view->setScene(scene);
-
     init_pallet();
+    show();
+
     load_board(":example/example1.txt");
 }
 
@@ -65,6 +66,7 @@ void MainWindow::load_board(std::string fname)
     board = new BoardGUI(board_str);
     board->lever_pulled(BLUE);
     scene->update_graphics(board);
+    ui->graphics_view->wrap_content_height();
 }
 
 BoardGUI* MainWindow::get_board()
