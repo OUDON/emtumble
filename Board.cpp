@@ -103,6 +103,20 @@ void Board::set_items_from_strings(std::vector<std::string> board_str)
     width  = _width;
 }
 
+void Board::clear_board()
+{
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (cells[y][x] != BoardItem::ItemType::SPAWN_BALL_BLUE &&
+                cells[y][x] != BoardItem::ItemType::SPAWN_BALL_RED &&
+                cells[y][x] != BoardItem::ItemType::LEVER_BLUE &&
+                cells[y][x] != BoardItem::ItemType::LEVER_RED) {
+                set_item(x, y, BoardItem::ItemType::EMPTY);
+            }
+        }
+    }
+}
+
 void Board::lever_pulled(Color color)
 {
     if (ball != nullptr) {

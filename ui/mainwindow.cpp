@@ -72,6 +72,7 @@ void MainWindow::on_button_step_clicked()
     step_board();
 }
 
+/* Menu Bar Actions */
 void MainWindow::on_action_open_triggered()
 {
     QString file_name = QFileDialog::getOpenFileName(this, "select file");
@@ -90,6 +91,14 @@ void MainWindow::on_action_toggle_outputs_bar_triggered()
         ui->action_toggle_outputs_bar->setText("Hide Marble Tray");
     }
 
+}
+
+void MainWindow::on_action_clear_board_triggered()
+{
+    if (board != nullptr) {
+        board->clear_board();
+        scene->update_graphics(board);
+    }
 }
 
 void MainWindow::on_button_play_clicked()

@@ -28,11 +28,13 @@ private slots:
     void on_button_step_clicked();
     void on_action_open_triggered();
     void on_action_toggle_outputs_bar_triggered();
+    void on_action_clear_board_triggered();
     void on_button_play_clicked();
     void on_radio_button_draw_icon_toggled(bool checked);
     void on_slider_speed_valueChanged(int value);
     void onPalletButtonClicked(int id);
     void step_board();
+
 
 
 private:

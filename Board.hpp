@@ -84,6 +84,7 @@ public:
     bool set_item(int x, int y, BoardItem::ItemType item);
     void set_items_from_strings(std::vector<std::string> board_str);
     bool is_valid_item(int x, int y, BoardItem::ItemType item);
+    void clear_board();
     
     void lever_pulled(Color color);
     bool add_ball(Color color);

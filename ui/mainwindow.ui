@@ -199,8 +199,15 @@ p, li { white-space: pre-wrap; }
     </property>
     <addaction name="action_toggle_outputs_bar"/>
    </widget>
+   <widget class="QMenu" name="menuBoard">
+    <property name="title">
+     <string>Board</string>
+    </property>
+    <addaction name="action_clear_board"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menuView"/>
+   <addaction name="menuBoard"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_open">
@@ -220,6 +227,11 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+M</string>
+   </property>
+  </action>
+  <action name="action_clear_board">
+   <property name="text">
+    <string>Clear Board</string>
    </property>
   </action>
  </widget>
