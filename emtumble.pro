@@ -1,6 +1,6 @@
 TARGET = emtumble
 CONFIG += c++14
-VERSION = 0.2.0
+VERSION = 0.3.0
 DEFINES += VERSION_STRING=\\\"$${VERSION}\\\"
 RESOURCES += resources.qrc
 
