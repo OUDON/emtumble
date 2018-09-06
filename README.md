@@ -8,6 +8,20 @@ By using this tool, you can play with Turing Tumble on your PC.
 The key feature is that the board size is variable. So, you can construct more complicated circuits with this.
 
 
+## Features
+## Implemented
+- [x] Basic simulation
+- [x] Change a board size
+- [x] Item pallet
+- [x] Load a board from a text file
+- [x] Export a board to an image file
+
+### Planning 
+- [ ] Save a board to a text file
+- [ ] Select/Copy/Paste/Delete multiple objects 
+- [ ] Use OpenGL to render faster
+
+
 ## Installation
 ### Mac OSX (10.13 or later)
 Download the executable from [here](https://github.com/OUDON/emtumble/releases).
