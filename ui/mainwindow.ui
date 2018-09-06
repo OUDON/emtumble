@@ -214,7 +214,7 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_open">
    <property name="text">
-    <string>Open</string>
+    <string>Open...</string>
    </property>
    <property name="toolTip">
     <string>Open file</string>
@@ -238,7 +238,7 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="action_export_to_image">
    <property name="text">
-    <string>Export to Image</string>
+    <string>Export to Image...</string>
    </property>
   </action>
  </widget>
