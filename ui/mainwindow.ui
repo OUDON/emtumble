@@ -192,6 +192,8 @@ p, li { white-space: pre-wrap; }
      <string>File</string>
     </property>
     <addaction name="action_open"/>
+    <addaction name="separator"/>
+    <addaction name="action_export_to_image"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -232,6 +234,11 @@ p, li { white-space: pre-wrap; }
   <action name="action_clear_board">
    <property name="text">
     <string>Clear Board</string>
+   </property>
+  </action>
+  <action name="action_export_to_image">
+   <property name="text">
+    <string>Export to Image</string>
    </property>
   </action>
  </widget>

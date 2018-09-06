@@ -113,6 +113,17 @@ void MainWindow::on_action_clear_board_triggered()
     }
 }
 
+void MainWindow::on_action_export_to_image_triggered()
+{
+    QString file_name = QFileDialog::getSaveFileName(this,
+            tr("Export to Image"), "",
+            tr("Images (*.png *.jpg)"));
+
+    if (!file_name.isEmpty() && !file_name.isNull()) {
+        scene->export_to_image(file_name);
+    }
+}
+
 void MainWindow::on_button_play_clicked()
 {
     if (timer_simulation_delay->isActive()) {

@@ -23,6 +23,8 @@ public:
     void set_mode(Mode mode, BoardItem::ItemType item = BoardItem::EMPTY);
     void update_graphics(BoardGUI *board);
 
+    void export_to_image(QString file_name);
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 

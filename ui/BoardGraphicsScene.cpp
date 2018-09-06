@@ -1,5 +1,6 @@
 #include "BoardGraphicsScene.h"
 #include "../common.hpp"
+#include <QPainter>
 
 BoardGraphicsScene::BoardGraphicsScene(QObject *parent) : QGraphicsScene(parent)
 {
@@ -45,4 +46,14 @@ void BoardGraphicsScene::set_mode(Mode mode, BoardItem::ItemType item)
 {
     current_mode = mode;
     inserting_item = item;
+}
+
+void BoardGraphicsScene::export_to_image(QString file_name)
+{
+    QRectF r = this->itemsBoundingRect();
+    QPixmap pixmap(r.width(), r.height());
+    pixmap.fill(QColor(0, 0, 0, 0));
+    QPainter painter(&pixmap);
+    this->render(&painter);
+    pixmap.save(file_name);
 }
