@@ -9,7 +9,7 @@ The key feature is that the board size is variable. So, you can construct more c
 
 
 ## Features
-## Implemented
+### Implemented
 - [x] Basic simulation
 - [x] Change a board size
 - [x] Item pallet
