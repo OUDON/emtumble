@@ -20,6 +20,7 @@ SOURCE_DIR  = .
 INCLUDEPATH    += $SOURCE_DIR
 SOURCES        += $$files(*.cpp, true)
 HEADERS        += ui/mainwindow.h
+HEADERS        += ui/board_size_dialog.h
 # HEADERS        += ui/BoardGraphicsScene.h
 # HEADERS        += ui/ScalableGraphicsView.h
 

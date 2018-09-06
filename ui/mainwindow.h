@@ -38,6 +38,7 @@ private slots:
     void on_action_toggle_outputs_bar_triggered();
     void on_action_clear_board_triggered();
     void on_action_export_to_image_triggered();
+    void on_action_board_size_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "board_size_dialog.h"
 
 #include "GUI.hpp"
 #include "common.hpp"
@@ -121,6 +122,20 @@ void MainWindow::on_action_export_to_image_triggered()
 
     if (!file_name.isEmpty() && !file_name.isNull()) {
         scene->export_to_image(file_name);
+    }
+}
+
+void MainWindow::on_action_board_size_triggered()
+{
+    if (board == nullptr) return;
+    BoardSizeDialog *dialog = new BoardSizeDialog(this, board->width, board->height);
+    if (dialog->exec() == QDialog::Accepted) {
+        int new_width = dialog->get_new_width();
+        int new_height = dialog->get_new_height();
+        board->change_board_size(new_width, new_height);
+        scene->update_graphics(board);
+        std::cerr << new_width << std::endl;
+        std::cerr << new_height << std::endl;
     }
 }
 

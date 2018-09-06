@@ -117,6 +117,29 @@ void Board::clear_board()
     }
 }
 
+bool Board::change_board_size(int new_width, int new_height)
+{
+    if (new_width < 1 || new_width > 1000 ||
+        new_height < 1 || new_height > 1000) return false;
+    cells.resize(new_height);
+    for (auto &row : cells) {
+        row.resize(new_width);
+    }
+    width = new_width;
+    height = new_height;
+
+    for (int y=0; y<height; y++) {
+        for (int x=0; x<width; x++) {
+            if (cells[y][x] == BoardItem::ItemType::EMPTY ||
+                cells[y][x] == BoardItem::ItemType::EMPTY_GEAR_ONLY) {
+                set_item(x, y, BoardItem::ItemType::EMPTY);
+            }
+        }
+    }
+
+    return true;
+}
+
 void Board::lever_pulled(Color color)
 {
     if (ball != nullptr) {

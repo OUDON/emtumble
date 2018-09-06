@@ -206,6 +206,8 @@ p, li { white-space: pre-wrap; }
      <string>Board</string>
     </property>
     <addaction name="action_clear_board"/>
+    <addaction name="separator"/>
+    <addaction name="action_board_size"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menuView"/>
@@ -239,6 +241,14 @@ p, li { white-space: pre-wrap; }
   <action name="action_export_to_image">
    <property name="text">
     <string>Export to Image...</string>
+   </property>
+  </action>
+  <action name="action_board_size">
+   <property name="text">
+    <string>Board Size...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
  </widget>
