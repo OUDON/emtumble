@@ -64,6 +64,8 @@ namespace BoardItem {
     QColor color(ItemType item);
     QPixmap pixmap(ItemType item);
     static std::map<BoardItem::ItemType, QPixmap> qpixmap_memo;
+
+    bool has_gear(ItemType item);
 }
 
 #endif
