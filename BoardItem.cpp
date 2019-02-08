@@ -11,3 +11,10 @@ QColor BoardItem::color(BoardItem::ItemType item)
 {
     return item_to_color.at(item);
 }
+
+bool has_gear(BoardItem::ItemType item)
+{
+    return (item == BoardItem::ItemType::GEAR
+            || item == BoardItem::ItemType::GEAR_BIT_POINTING_LEFT
+            || item == BoardItem::ItemType::GEAR_BIT_POINTING_RIGHT);
+}
