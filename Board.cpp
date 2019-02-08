@@ -336,6 +336,15 @@ void BoardGUI::change_clicked_item(QGraphicsItem *gitem, BoardItem::ItemType new
     int x = item_idx.first;
     int y = item_idx.second;
     if (x < 0 || y < 0) return;
+
+    if (BoardItem::has_gear(new_item_type) && empty_cell_type(x, y) == BoardItem::EMPTY_GEAR_ONLY) {
+        new_item_type = BoardItem::ItemType::GEAR;
+    }
+
+    if (new_item_type == cells[y][x]) {
+        new_item_type = BoardItem::EMPTY;
+    }
+
     set_item(x, y, new_item_type);
 }
 
