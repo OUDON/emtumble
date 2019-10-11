@@ -152,7 +152,8 @@ void MainWindow::start_timer()
 {
     if (!timer_simulation_delay->isActive()) {
         timer_simulation_delay->start(get_timer_delay());
-        ui->button_play->setText("Stop");
+        ui->button_play->setText(tr("Stop"));
+        ui->button_play->setShortcut(tr("Space"));
     }
 }
 
@@ -160,7 +161,8 @@ void MainWindow::stop_timer()
 {
     if (timer_simulation_delay->isActive()) {
         timer_simulation_delay->stop();
-        ui->button_play->setText("Play");
+        ui->button_play->setText(tr("Play"));
+        ui->button_play->setShortcut(tr("Space"));
     }
 }
 
