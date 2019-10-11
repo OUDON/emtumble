@@ -1,5 +1,6 @@
 bin
 data/*
+img/semantic/*
 
 ### https://raw.github.com/github/gitignore/2b3b1f428fb84dc4ba3ad2307ec44af3c5799848/c++.gitignore
 
