@@ -179,6 +179,18 @@ void MainWindow::on_slider_speed_valueChanged(int value)
     }
 }
 
+void MainWindow::on_action_pull_blue_lever_triggered()
+{
+    board->lever_pulled(BLUE);
+    scene->update_graphics(board);
+}
+
+void MainWindow::on_action_pull_red_lever_triggered()
+{
+    board->lever_pulled(RED);
+    scene->update_graphics(board);
+}
+
 void MainWindow::init_pallet()
 {
     pallet_button_group = new QButtonGroup(this);

@@ -212,8 +212,16 @@ p, li { white-space: pre-wrap; }
     <addaction name="separator"/>
     <addaction name="action_board_size"/>
    </widget>
+   <widget class="QMenu" name="menuOperation">
+    <property name="title">
+     <string>Operation</string>
+    </property>
+    <addaction name="action_pull_blue_lever"/>
+    <addaction name="action_pull_red_lever"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menuView"/>
+   <addaction name="menuOperation"/>
    <addaction name="menuBoard"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -252,6 +260,22 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="action_pull_blue_lever">
+   <property name="text">
+    <string>Pull Blue Lever</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="action_pull_red_lever">
+   <property name="text">
+    <string>Pull Red Lever</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+L</string>
    </property>
   </action>
  </widget>
