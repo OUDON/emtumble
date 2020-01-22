@@ -143,7 +143,6 @@ bool Board::change_board_size(int new_width, int new_height)
 void Board::lever_pulled(Color color)
 {
     if (ball != nullptr) {
-        results.push_back(*ball);
         delete ball;
         ball = nullptr;
     }
@@ -217,10 +216,12 @@ bool Board::step()
         break;
 
     case BoardItem::LEVER_BLUE:
+        results.push_back(*ball);
         lever_pulled(BLUE);
         break;
 
     case BoardItem::LEVER_RED:
+        results.push_back(*ball);
         lever_pulled(RED);
         break;
 
