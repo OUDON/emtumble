@@ -37,8 +37,30 @@ make
 ```
 
 
-## Requirements to Build
+## How to Build
+### Requirements to Build
 - Qt5
+
+### Update UI files
+
+If you change a ui files (ui/*.ui), then you need execute the folloing command:
+
+```sh
+uic ui/[UI_FILE_NAME].ui -o ui/ui_[UI_FILE_NAME].h
+```
+
+For example:
+
+``` sh
+uic ui/mainwindow.ui -o ui/ui_mainwindow.h
+```
+
+### Build
+
+```sh
+qmake
+make
+```
 
 
 ## Usage
