@@ -233,6 +233,11 @@ bool Board::step()
 
     default:
         std::cerr << "WARNING: The ball is arrived at (" << ball->x << ", " << ball->y << "), but this cell is given no action." << std::endl;
+        if ((ball->x < 0) || (ball->x >= width)) {
+            continuing = false;
+            delete ball;
+            ball = nullptr;
+        }
     }
 
     return continuing;
